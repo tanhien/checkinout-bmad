@@ -1,0 +1,18 @@
+{
+  "name": "@hotel/config",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./eslint": "./eslint/index.js",
+    "./typescript/*": "./typescript/*",
+    "./tailwind/*": "./tailwind/*"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.8.0"
+  }
+}

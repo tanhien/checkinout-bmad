@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --font-family-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-size-kiosk-body: 1.125rem;   /* 18px min for kiosk readability */
+  --font-size-kiosk-heading: 1.5rem;  /* 24px min */
+}
+
+/* Kiosk-specific: touch-optimized defaults */
+* {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+body {
+  font-size: var(--font-size-kiosk-body);
+  min-height: 100dvh;
+  overflow: hidden; /* Kiosk mode: no scroll on body */
+}

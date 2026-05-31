@@ -1,0 +1,28 @@
+{
+  "name": "@hotel/db",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:studio": "prisma studio",
+    "db:reset": "prisma migrate reset --force",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.0.0",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "@hotel/config": "workspace:*",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^22.0.0",
+    "prisma": "^6.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.8.0"
+  }
+}

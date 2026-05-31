@@ -1,0 +1,36 @@
+Questions:
+
+1. Loại hình & quy mô: Khách sạn loại nào, bao nhiêu phòng?
+2. PMS hiện tại: Đang dùng phần mềm quản lý nào chưa?
+3. Payment: Muốn tích hợp payment nào (Stripe / VNPay / MoMo / ZaloPay)?
+4. Kiosk device: Chạy trên iPad, Android tablet, hay Windows PC?
+5. Tech preference: Team quen dùng stack gì (nếu có)?
+
+1. Loại hình & quy mô: Khách sạn loại nào, bao nhiêu phòng? Nhiều loại, hãy tự phân tích các loại, hệ thống hổ trợ được cho các loại
+2. PMS hiện tại: Đang dùng phần mềm quản lý nào chưa? Chưa
+3. Payment: Muốn tích hợp payment nào (Stripe / VNPay / MoMo / ZaloPay)? Xây dựng payment demo, sẽ tích hợp thực tế khi có khách hàng
+4. Kiosk device: Chạy trên iPad, Android tablet, hay Windows PC? Android table và Windows PC
+5. Tech preference: Team quen dùng stack gì (nếu có)? Không
+
+Hãy tạo skill trong project này để tôi có thể tái sử dụng cho các project khác về sau, trong quá trình phát triển hệ thống nếu có phát sinh các skill khác thì hãy cập nhật vào danh sách skill
+
+Hãy lưu lại plan đầy đủ của hệ thống mà bạn đã tạo vào trong project này
+
+> @hotel/db@0.1.0 db:seed /Users/hiennguyen/Github/checkinout-bmad/packages/db
+> tsx prisma/seed.ts
+
+🌱 Seeding database...
+✅ Property: Demo Boutique Hotel
+✅ Amenities: 5 created
+✅ Room types: Standard, Deluxe, Suite
+✅ Rooms: 10 rooms created (5 Standard, 4 Deluxe, 1 Suite)
+✅ Rate plans: Standard Rate, Non-Refundable Rate
+✅ Admin staff: admin@demo.hotel / Admin123!
+✅ Services: 5 services created
+✅ Tax rate: VAT 10%
+✅ Promo code: DEMO2025 (10% off)
+
+✨ Seed complete!
+   Property ID: cmps9ltgd0000nwvitx0iwm0b
+   Kiosk API Key: demo-kiosk-api-key-seed
+   Admin login: admin@demo.hotel / Admin123!

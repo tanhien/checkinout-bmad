@@ -1,0 +1,10 @@
+{
+  "extends": "@hotel/config/typescript/base.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "baseUrl": "."
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
