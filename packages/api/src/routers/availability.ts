@@ -95,6 +95,7 @@ export const availabilityRouter = router({
         const totalRooms = rt._count.rooms
         const bookedCount = bookingCountMap.get(rt.id) ?? 0
         const availableCount = Math.max(0, totalRooms - bookedCount)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { _count, ...rtFields } = rt
         return {
           ...rtFields,

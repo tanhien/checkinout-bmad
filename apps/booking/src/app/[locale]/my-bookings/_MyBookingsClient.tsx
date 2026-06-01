@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { trpc } from "@/lib/trpc"
@@ -38,11 +38,11 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" })
 }
 
-export function MyBookingsClient({ bookings, locale }: { bookings: Booking[]; locale: string }) {
+export function MyBookingsClient({ bookings, locale, guestEmail }: { bookings: Booking[]; locale: string; guestEmail: string }) {
   const t = useTranslations()
-  const now = Date.now()
+  const now = useMemo(() => Date.now(), [])
 
-  const upcoming = bookings.filter((b) => b.status === "CONFIRMED" && new Date(b.checkInDate).getTime() > now)
+  const upcoming = bookings.filter((b) => b.status === "CONFIRMED")
   const active = bookings.filter((b) => b.status === "CHECKED_IN")
   const past = bookings.filter((b) => b.status === "CHECKED_OUT")
   const cancelled = bookings.filter((b) => b.status === "CANCELLED" || b.status === "NO_SHOW")
@@ -126,7 +126,7 @@ export function MyBookingsClient({ bookings, locale }: { bookings: Booking[]; lo
                   </div>
                   <div className="flex flex-col gap-2 items-end shrink-0">
                     <Link
-                      href={`/${locale}/booking/${booking.confirmationCode}?email=`}
+                      href={`/${locale}/booking/${booking.confirmationCode}?email=${encodeURIComponent(guestEmail)}`}
                       className="text-xs text-blue-700 hover:underline"
                     >
                       {t("bookings.detail.title")} →

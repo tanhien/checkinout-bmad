@@ -84,6 +84,13 @@ app.prepare().then(() => {
     // Auto-join property room
     socket.join(`property:${session.propertyId}`)
 
+    // E6-S3: Broadcast alert dismiss to all staff in the same property
+    socket.on("alert:dismiss", (data: { alertId: string }) => {
+      staffNamespace
+        .to(`property:${session.propertyId}`)
+        .emit("alert:dismissed", { alertId: data.alertId, dismissedBy: session.staffId })
+    })
+
     socket.on("disconnect", () => {
       console.log(`[/staff] Disconnected: ${socket.id}`)
     })

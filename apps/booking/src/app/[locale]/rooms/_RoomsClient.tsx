@@ -42,7 +42,7 @@ export function RoomsClient({
   checkin,
   checkout,
   adults,
-  children,
+  childCount,
   initialSort,
 }: {
   rooms: Room[]
@@ -50,7 +50,7 @@ export function RoomsClient({
   checkin?: string
   checkout?: string
   adults: number
-  children: number
+  childCount: number
   initialSort: string
 }) {
   const t = useTranslations()
@@ -72,7 +72,7 @@ export function RoomsClient({
     if (checkin) params.set("checkin", checkin)
     if (checkout) params.set("checkout", checkout)
     params.set("adults", String(adults))
-    params.set("children", String(children))
+    params.set("children", String(childCount))
     return `/${locale}/book?${params}`
   }
 

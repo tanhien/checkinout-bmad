@@ -34,6 +34,8 @@ model Property {
   breakfastHours  String?
   invoiceTemplate String?
   emailTemplate   String?
+  taxCode         String?
+  bankAccount     String?
   kioskApiKey     String       @unique @default(cuid())
   roomTypes       RoomType[]
   rooms           Room[]
@@ -390,23 +392,26 @@ enum PaymentMethod {
 // ─── STAFF ───────────────────────────────────────────────────────────────────
 
 model Staff {
-  id            String          @id @default(cuid())
-  propertyId    String
-  property      Property        @relation(fields: [propertyId], references: [id])
-  email         String          @unique
-  passwordHash  String
-  firstName     String
-  lastName      String
-  role          StaffRole
-  isActive      Boolean         @default(true)
-  language      String          @default("vi")
-  lastLoginAt   DateTime?
-  guestNotes    GuestNote[]     @relation("GuestNoteAuthor")
-  assignedRooms Room[]          @relation("HousekeepingAssignment")
-  statusLogs    RoomStatusLog[] @relation("RoomStatusLogStaff")
-  auditLogs     AuditLog[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  id                  String          @id @default(cuid())
+  propertyId          String
+  property            Property        @relation(fields: [propertyId], references: [id])
+  email               String          @unique
+  passwordHash        String
+  firstName           String
+  lastName            String
+  role                StaffRole
+  isActive            Boolean         @default(true)
+  language            String          @default("vi")
+  lastLoginAt         DateTime?
+  passwordResetToken  String?         @unique
+  passwordResetExpiry DateTime?
+  onboardingToken     String?         @unique
+  guestNotes          GuestNote[]     @relation("GuestNoteAuthor")
+  assignedRooms       Room[]          @relation("HousekeepingAssignment")
+  statusLogs          RoomStatusLog[] @relation("RoomStatusLogStaff")
+  auditLogs           AuditLog[]
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
 
   @@index([propertyId, isActive])
 }

@@ -34,6 +34,7 @@ export function Header({
     { href: `/${locale}`, label: t("nav.home") },
     { href: `/${locale}/rooms`, label: t("nav.rooms") },
     { href: `/${locale}/about`, label: t("nav.about") },
+    { href: `/${locale}/amenities`, label: t("nav.amenities") },
     { href: `/${locale}/contact`, label: t("nav.contact") },
   ]
 

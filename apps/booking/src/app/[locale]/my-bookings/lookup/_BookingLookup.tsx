@@ -81,7 +81,7 @@ export function BookingLookup({ locale }: { locale: string }) {
           <p className="font-bold text-blue-800 font-mono text-base">{result.confirmationCode}</p>
           <p className="font-semibold text-gray-900">{result.roomType.name}</p>
           <p className="text-gray-600">{formatDate(result.checkInDate)} → {formatDate(result.checkOutDate)} · {result.totalNights} đêm</p>
-          <p className="text-gray-600">{result.guest.firstName} {result.guest.lastName}</p>
+          <p className="text-gray-600">{result.guest.lastName} {result.guest.firstName}</p>
           <div className="pt-2">
             <Link
               href={`/${locale}/booking/${result.confirmationCode}?email=${encodeURIComponent(result.guest.email)}`}

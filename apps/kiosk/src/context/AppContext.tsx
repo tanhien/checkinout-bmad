@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react"
+import { createContext, useContext, useState, useEffect, useRef, useCallback, type ReactNode } from "react"
 import type { Lang } from "@/lib/i18n"
 import { trpc } from "@/lib/trpc"
 
@@ -29,7 +29,6 @@ type AppContextValue = {
 
 const AppContext = createContext<AppContextValue | null>(null)
 
-const IDLE_MS = 5 * 60 * 1000     // 5 min → show idle overlay (handled in App.tsx)
 const KIOSK_ID = import.meta.env.VITE_KIOSK_ID ?? "kiosk-1"
 
 export function AppProvider({ children }: { children: ReactNode }) {
@@ -52,10 +51,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }).catch(() => {/* silently ignore — dev mode without backend */})
   }, [])
 
-  const [idleTimerKey, setIdleTimerKey] = useState(0)
+  const idleTickRef = useRef(0)
 
   const resetIdleTimer = useCallback(() => {
-    setIdleTimerKey((k) => k + 1)
+    idleTickRef.current += 1
   }, [])
 
   const goTo = useCallback((s: AppScreen) => {

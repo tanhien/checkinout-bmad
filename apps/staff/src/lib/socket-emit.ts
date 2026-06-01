@@ -2,17 +2,23 @@
 // Used to broadcast realtime events to connected clients
 import type { RoomStatusChangedEvent, CallForHelpEvent } from "@hotel/types"
 
+type StaffIO = {
+  to(room: string): { emit(event: string, data: unknown): void }
+}
+
+declare global {
+  var staffIO: StaffIO | undefined
+}
+
 export function emitRoomStatusChanged(event: RoomStatusChangedEvent) {
-  const io = (global as any).staffIO
-  if (!io) {
+  if (!global.staffIO) {
     console.warn("[Socket.io] Not initialized — event not emitted")
     return
   }
-  io.to(`property:${event.propertyId}`).emit("room:statusChanged", event)
+  global.staffIO.to(`property:${event.propertyId}`).emit("room:statusChanged", event)
 }
 
 export function emitCallForHelp(event: CallForHelpEvent) {
-  const io = (global as any).staffIO
-  if (!io) return
-  io.to(`property:${event.propertyId}`).emit("alert:callForHelp", event)
+  if (!global.staffIO) return
+  global.staffIO.to(`property:${event.propertyId}`).emit("alert:callForHelp", event)
 }

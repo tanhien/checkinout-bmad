@@ -94,13 +94,13 @@ export function buildSessionCookie(token: string, rememberMe: boolean): SessionC
 type AuthedHandler = (
   req: NextRequest,
   session: StaffSession,
-  ctx?: { params: Promise<Record<string, string>> }
+  ctx: { params: Promise<Record<string, string>> }
 ) => Promise<Response>
 
 export function withStaffAuth(handler: AuthedHandler, allowedRoles?: StaffRole[]) {
   return async (
     req: NextRequest,
-    ctx?: { params: Promise<Record<string, string>> }
+    ctx: { params: Promise<Record<string, string>> }
   ): Promise<Response> => {
     const token = req.cookies.get(COOKIE_NAME)?.value
     if (!token) {

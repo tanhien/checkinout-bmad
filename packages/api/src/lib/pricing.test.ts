@@ -3,8 +3,6 @@ import { getEffectivePrice, calculatePricing } from "./pricing"
 
 // 2026-06-01 = Monday (verified: 2026-01-01 is Thu; +151 days = Mon)
 const MON = new Date("2026-06-01T00:00:00.000Z") // Mon
-const TUE = new Date("2026-06-02T00:00:00.000Z")
-const WED = new Date("2026-06-03T00:00:00.000Z")
 const THU = new Date("2026-06-04T00:00:00.000Z")
 const FRI = new Date("2026-06-05T00:00:00.000Z")
 const SAT = new Date("2026-06-06T00:00:00.000Z")

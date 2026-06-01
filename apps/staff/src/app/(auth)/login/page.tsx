@@ -109,6 +109,15 @@ export default function LoginPage() {
           >
             {loading ? "Đang đăng nhập..." : "Đăng nhập"}
           </Button>
+
+          <div className="mt-4 flex items-center justify-between text-sm">
+            <a href="/forgot-password" className="text-blue-700 hover:underline">
+              Quên mật khẩu?
+            </a>
+            <a href="/guide" className="text-gray-500 hover:text-blue-700 hover:underline">
+              Hướng dẫn sử dụng →
+            </a>
+          </div>
         </form>
       </div>
     </div>

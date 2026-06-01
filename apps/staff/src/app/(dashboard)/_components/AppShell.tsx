@@ -58,7 +58,7 @@ const NAV_ITEMS: NavItem[] = [
     roles: ["ADMIN", "MANAGER", "ACCOUNTANT"],
   },
   {
-    href: "/staff",
+    href: "/settings/staff",
     label: "Nhân viên",
     icon: "👔",
     roles: ["ADMIN", "MANAGER"],
@@ -143,11 +143,19 @@ function Sidebar({
           </ul>
         </nav>
 
-        {/* Role badge at bottom */}
-        <div className="px-6 py-4 border-t border-gray-700">
-          <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+        {/* Role badge + guide link at bottom */}
+        <div className="px-4 py-4 border-t border-gray-700 space-y-2">
+          <span className="block text-xs font-medium text-gray-400 uppercase tracking-wider px-2">
             {ROLE_LABELS[role]}
           </span>
+          <Link
+            href="/guide"
+            target="_blank"
+            className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
+          >
+            <span>📖</span>
+            Hướng dẫn sử dụng
+          </Link>
         </div>
       </aside>
     </>

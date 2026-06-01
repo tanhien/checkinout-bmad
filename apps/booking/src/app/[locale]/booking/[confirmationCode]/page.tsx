@@ -3,7 +3,8 @@ import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 import QRCode from "qrcode"
 import { getPortalCaller } from "@/lib/portal-caller"
-import { ConfirmationClient } from "./_ConfirmationClient"
+import { getGuestSession } from "@/lib/auth"
+import { ConfirmationCode, ConfirmationActions } from "./_ConfirmationClient"
 
 type Props = {
   params: Promise<{ locale: string; confirmationCode: string }>
@@ -21,13 +22,21 @@ export default async function ConfirmationPage({ params, searchParams }: Props) 
   const sp = await searchParams
   const t = await getTranslations({ locale })
 
-  if (!sp.email) notFound()
+  // Resolve email: query param first, then logged-in guest session
+  let email = sp.email?.trim() || null
+  if (!email) {
+    const session = await getGuestSession()
+    email = session?.email ?? null
+  }
+
+  if (!email) notFound()
 
   let booking = null
   try {
     const caller = await getPortalCaller()
-    booking = await caller.portal.getBookingByCode({ code: confirmationCode, email: sp.email })
-  } catch {
+    booking = await caller.portal.getBookingByCode({ code: confirmationCode, email })
+  } catch (err) {
+    if (err instanceof Error && err.message === "NEXT_NOT_FOUND") throw err
     notFound()
   }
   if (!booking) notFound()
@@ -67,36 +76,38 @@ export default async function ConfirmationPage({ params, searchParams }: Props) 
       day: "2-digit", month: "2-digit", year: "numeric",
     })
 
+  const isVi = locale === "vi"
+  const totalAmount = booking.roomPricePerNight * booking.totalNights - (booking.discountAmount ?? 0)
+
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 print:max-w-full print:px-8">
-      {/* Print-only heading */}
       <p className="hidden print:block text-xs text-gray-500 mb-4">{t("confirmation.title")}</p>
 
       <div className="text-center mb-8">
         <div className="text-5xl mb-3">🎉</div>
         <h1 className="text-2xl font-bold text-gray-900">{t("confirmation.title")}</h1>
         <p className="text-sm text-gray-500 mt-1">
-          {t("confirmation.email_sent")} {booking.guest.email}
+          {t("confirmation.email_sent")} <span className="font-medium">{booking.guest.email}</span>
         </p>
       </div>
 
       {/* Confirmation code + QR */}
-      <div className="rounded-2xl bg-blue-50 ring-2 ring-blue-200 p-6 mb-6 flex flex-col sm:flex-row items-center gap-6">
+      <div className="rounded-2xl bg-amber-50 ring-2 ring-amber-200 p-6 mb-6 flex flex-col sm:flex-row items-center gap-6">
         <div className="flex-1">
-          <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-2">
+          <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-2">
             {t("confirmation.code_label")}
           </p>
-          <ConfirmationClient code={booking.confirmationCode} />
+          <ConfirmationCode code={booking.confirmationCode} />
           <p className="text-xs text-gray-500 mt-3">{t("confirmation.qr_instruction")}</p>
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={qrDataUrl} alt="QR Code" className="w-32 h-32 flex-shrink-0" />
+        <img src={qrDataUrl} alt="QR Code" className="w-32 h-32 flex-shrink-0 rounded-xl" />
       </div>
 
       {/* Booking details */}
       <div className="rounded-2xl bg-white ring-1 ring-gray-200 p-6 mb-6">
         <h2 className="font-semibold text-gray-900 mb-4">{t("confirmation.details")}</h2>
-        <div className="space-y-2 text-sm">
+        <div className="space-y-3 text-sm">
           <div className="flex justify-between">
             <span className="text-gray-500">{t("book.summary.room")}</span>
             <span className="font-medium">{booking.roomType.name}</span>
@@ -107,53 +118,56 @@ export default async function ConfirmationPage({ params, searchParams }: Props) 
           </div>
           <div className="flex justify-between">
             <span className="text-gray-500">{t("book.summary.nights")}</span>
-            <span className="font-medium">{booking.totalNights}</span>
+            <span className="font-medium">{booking.totalNights} {t("common.nights")}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-500">{t("book.summary.guests")}</span>
-            <span className="font-medium">{booking.adults} người lớn{booking.children > 0 ? ` + ${booking.children} trẻ em` : ""}</span>
+            <span className="font-medium">
+              {booking.adults} {isVi ? "người lớn" : "adults"}
+              {booking.children > 0 ? ` + ${booking.children} ${isVi ? "trẻ em" : "children"}` : ""}
+            </span>
           </div>
+          {booking.ratePlan && (
+            <div className="flex justify-between">
+              <span className="text-gray-500">{isVi ? "Gói giá" : "Rate"}</span>
+              <span className="font-medium">{booking.ratePlan.name}</span>
+            </div>
+          )}
+          <div className="flex justify-between">
+            <span className="text-gray-500">{t("book.summary.rate")}</span>
+            <span className="font-medium">{booking.roomPricePerNight.toLocaleString("vi-VN")} VNĐ</span>
+          </div>
+          {(booking.discountAmount ?? 0) > 0 && (
+            <div className="flex justify-between text-green-700">
+              <span>{t("book.summary.discount")}</span>
+              <span>-{(booking.discountAmount ?? 0).toLocaleString("vi-VN")} VNĐ</span>
+            </div>
+          )}
           <div className="flex justify-between pt-2 border-t border-gray-100">
             <span className="font-semibold text-gray-700">{t("common.total")}</span>
-            <span className="font-bold text-blue-700">
-              {(booking.roomPricePerNight * booking.totalNights - (booking.discountAmount ?? 0)).toLocaleString("vi-VN")} VNĐ
+            <span className="font-bold text-amber-700 text-base">
+              {totalAmount.toLocaleString("vi-VN")} VNĐ
             </span>
           </div>
         </div>
+        <p className="text-xs text-gray-400 mt-3">{t("book.pay_at_property")}</p>
+      </div>
+
+      {/* Guest info */}
+      <div className="rounded-2xl bg-gray-50 ring-1 ring-gray-200 p-5 mb-6 text-sm">
+        <p className="font-semibold text-gray-700 mb-2">{isVi ? "Thông tin khách" : "Guest Info"}</p>
+        <p className="text-gray-600">{booking.guest.lastName} {booking.guest.firstName}</p>
+        <p className="text-gray-500">{booking.guest.email}</p>
       </div>
 
       {/* Actions */}
-      <div className="flex flex-wrap gap-3 print:hidden">
-        <a
-          href={googleCalUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-xl border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-        >
-          📅 {t("confirmation.add_calendar")}
-        </a>
-        <button
-          onClick={() => window.print()}
-          className="rounded-xl border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-        >
-          🖨 {t("confirmation.print")}
-        </button>
-        <a
-          href={`/${locale}/my-bookings`}
-          className="rounded-xl bg-blue-700 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-800 transition-colors"
-        >
-          {t("confirmation.manage")}
-        </a>
-      </div>
-
-      {/* Hidden ICS data for download */}
-      <script
-        id="ics-data"
-        type="text/plain"
-        dangerouslySetInnerHTML={{ __html: icsContent }}
+      <ConfirmationActions
+        googleCalUrl={googleCalUrl}
+        managePath={`/${locale}/my-bookings`}
+        icsContent={icsContent}
+        confirmationCode={booking.confirmationCode}
       />
 
-      {/* Print styles */}
       <style>{`
         @media print {
           header, footer, nav { display: none !important; }

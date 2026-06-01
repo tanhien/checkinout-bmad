@@ -35,6 +35,49 @@ function computeTotals(
 // ─── Router ──────────────────────────────────────────────────────────────────
 
 export const folioRouter = router({
+  // List all open folios for the Folio dashboard
+  listOpen: staffProcedure.query(async ({ ctx }) => {
+    const folios = await ctx.db.folio.findMany({
+      where: { booking: { propertyId: ctx.propertyId! }, status: "OPEN" },
+      include: {
+        booking: {
+          select: {
+            id: true,
+            confirmationCode: true,
+            status: true,
+            checkInDate: true,
+            checkOutDate: true,
+            guest: { select: { firstName: true, lastName: true } },
+            rooms: { select: { room: { select: { number: true } } }, take: 1 },
+          },
+        },
+        items: { select: { amount: true, isVoided: true } },
+        payments: { select: { amount: true } },
+      },
+      orderBy: { updatedAt: "desc" },
+    })
+
+    return folios.map((f) => {
+      const { chargesTotal, paymentsTotal, balance } = computeTotals(
+        f.items as Array<{ amount: unknown; isVoided: boolean }>,
+        f.payments as Array<{ amount: unknown }>,
+      )
+      return {
+        id: f.id,
+        bookingId: f.bookingId,
+        confirmationCode: f.booking.confirmationCode,
+        bookingStatus: f.booking.status as string,
+        checkInDate: f.booking.checkInDate.toISOString().slice(0, 10),
+        checkOutDate: f.booking.checkOutDate.toISOString().slice(0, 10),
+        guestName: `${f.booking.guest.lastName} ${f.booking.guest.firstName}`,
+        roomNumber: f.booking.rooms[0]?.room.number ?? "—",
+        chargesTotal,
+        paymentsTotal,
+        balance,
+      }
+    })
+  }),
+
   // AC 1 — full folio with items, payments, and computed totals
   getByBooking: staffProcedure
     .input(z.object({ bookingId: z.string() }))

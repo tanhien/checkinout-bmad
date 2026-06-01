@@ -232,7 +232,7 @@ function BookingConfirmScreen({
               </p>
             </div>
             <div className="divide-y divide-gray-100 px-6">
-              <Row label={t("checkin.step2.guest")} value={`${booking.guest.firstName} ${booking.guest.lastName}`} />
+              <Row label={t("checkin.step2.guest")} value={`${booking.guest.lastName} ${booking.guest.firstName}`} />
               <Row label={t("checkin.step2.room_type")} value={booking.roomType.name} />
               <Row label={t("checkin.step2.checkin")} value={booking.checkInDate} />
               <Row label={t("checkin.step2.checkout")} value={booking.checkOutDate} />

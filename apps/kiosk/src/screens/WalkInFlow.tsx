@@ -192,10 +192,10 @@ function RoomTypeListScreen({
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex h-screen flex-col">
       <ScreenHeader titleKey="walkin.title" onBack={onBack} step={2} totalSteps={5} />
 
-      <div className="flex-1 overflow-y-auto px-6 py-4">
+      <div className="flex-1 min-h-0 overflow-y-auto px-6 py-4">
         <h2 className="mb-6 text-center text-3xl font-bold text-white">{t("walkin.step2.title")}</h2>
 
         {loading && (

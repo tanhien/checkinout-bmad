@@ -4,26 +4,11 @@ import { randomBytes } from "crypto"
 import { router, kioskProcedure } from "../trpc"
 import { calculatePricing } from "../lib/pricing"
 import { sendCheckinConfirmation } from "../lib/email"
+import { normalizeName, buildConfirmationCode } from "../lib/normalize"
 import type { PrismaClient } from "@hotel/db"
 
-// Normalize Vietnamese name: strip diacritics + lowercase + collapse whitespace
-function normalizeName(name: string): string {
-  return name
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/đ/g, "d")
-    .replace(/Đ/g, "D")
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, " ")
-}
-
 function generateCode(): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-  const bytes = randomBytes(6)
-  let suffix = ""
-  for (const byte of bytes) suffix += chars[byte % chars.length]!
-  return `HTL-${new Date().getUTCFullYear()}-${suffix}`
+  return buildConfirmationCode(new Date().getUTCFullYear(), randomBytes(6))
 }
 
 // Auto-assign a CLEAN/INSPECTED room using optimistic locking via DB transaction.
@@ -186,8 +171,8 @@ export const kioskRouter = router({
         throw new TRPCError({ code: "NOT_FOUND", message: "Booking not found or already checked in" })
       }
 
-      // Name verification (case-insensitive, diacritics-normalized)
-      const expectedName = normalizeName(`${booking.guest.firstName} ${booking.guest.lastName}`)
+      // Name verification (case-insensitive, diacritics-normalized, Vietnamese order: lastName firstName)
+      const expectedName = normalizeName(`${booking.guest.lastName} ${booking.guest.firstName}`)
       const providedName = normalizeName(input.guestName)
       if (providedName !== expectedName) {
         throw new TRPCError({ code: "FORBIDDEN", message: "NAME_MISMATCH" })
@@ -244,7 +229,7 @@ export const kioskRouter = router({
       // Send confirmation email (fire-and-forget)
       sendCheckinConfirmation({
         guestEmail: booking.guest.email,
-        guestName: `${booking.guest.firstName} ${booking.guest.lastName}`,
+        guestName: `${booking.guest.lastName} ${booking.guest.firstName}`,
         confirmationCode: booking.confirmationCode,
         roomNumber: assignedRoom.number,
         checkInDate: booking.checkInDate.toISOString().slice(0, 10),
@@ -261,7 +246,7 @@ export const kioskRouter = router({
         roomNumber: assignedRoom.number,
         floor: assignedRoom.floor,
         wifiPassword: booking.property.wifiPassword,
-        guestName: `${booking.guest.firstName} ${booking.guest.lastName}`,
+        guestName: `${booking.guest.lastName} ${booking.guest.firstName}`,
         checkInDate: booking.checkInDate.toISOString().slice(0, 10),
         checkOutDate: booking.checkOutDate.toISOString().slice(0, 10),
       }
@@ -554,7 +539,7 @@ export const kioskRouter = router({
         confirmationCode,
         roomNumber: assignedRoom.number,
         floor: assignedRoom.floor,
-        guestName: `${input.firstName} ${input.lastName}`,
+        guestName: `${input.lastName} ${input.firstName}`,
         checkInDate: input.checkIn,
         checkOutDate: input.checkOut,
         totalAmount: pricing.total,
@@ -623,9 +608,9 @@ export const kioskRouter = router({
         throw new TRPCError({ code: "NOT_FOUND", message: "No checked-in booking found" })
       }
 
-      // Verify guest name when looking up by room number
+      // Verify guest name when looking up by room number (Vietnamese order: lastName firstName)
       if (!confirmationCode && guestName) {
-        const expected = normalizeName(`${booking.guest.firstName} ${booking.guest.lastName}`)
+        const expected = normalizeName(`${booking.guest.lastName} ${booking.guest.firstName}`)
         if (normalizeName(guestName) !== expected) {
           throw new TRPCError({ code: "FORBIDDEN", message: "NAME_MISMATCH" })
         }
@@ -637,7 +622,7 @@ export const kioskRouter = router({
       return {
         id: booking.id,
         confirmationCode: booking.confirmationCode,
-        guestName: `${booking.guest.firstName} ${booking.guest.lastName}`,
+        guestName: `${booking.guest.lastName} ${booking.guest.firstName}`,
         guestEmail: booking.guest.email,
         roomTypeName: booking.roomType.name,
         roomNumbers: booking.rooms.map((br) => br.room.number),
@@ -737,7 +722,7 @@ export const kioskRouter = router({
 
       return {
         confirmationCode: booking.confirmationCode,
-        guestName: `${booking.guest.firstName} ${booking.guest.lastName}`,
+        guestName: `${booking.guest.lastName} ${booking.guest.firstName}`,
         checkOutTime: now.toISOString(),
         amountPaid: balance,
       }

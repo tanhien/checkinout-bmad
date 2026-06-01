@@ -153,7 +153,7 @@ await ctx.db.auditLog.create({
 | E1-S4 | ✅ | tRPC API layer |
 | E1-S5 | ✅ | Redis + Socket.io realtime |
 | E1-S6 | ✅ | Shared UI component library |
-| E1-S7 | ⏳ | File storage (Cloudflare R2) — pending |
+| E1-S7 | ✅ | File storage (Cloudflare R2 adapter + demo fallback) + room photo upload UI |
 
 ### E2 — Backend API (Core Hotel Operations)
 | Story | Status | Description |
@@ -163,9 +163,9 @@ await ctx.db.auditLog.create({
 | E2-S3 | ✅ | Rate plan management & pricing |
 | E2-S4 | ✅ | Guest profile CRUD & search |
 | E2-S5 | ✅ | Booking CRUD (staff-created) |
-| E2-S6 | ⏳ | Room assignment & status management |
+| E2-S6 | ✅ | Room assignment & status management |
 | E2-S7 | ✅ | Folio management & service charges |
-| E2-S8 | ⏳ | Staff check-in & check-out flow |
+| E2-S8 | ✅ | Staff check-in & check-out flow |
 
 ### E3 — Staff Management Web (UI)
 | Story | Status | Description |
@@ -221,7 +221,31 @@ await ctx.db.auditLog.create({
 - Booking lock: `lockedUntil = now + 30min` khi confirm (BR-B-07)
 
 ### E6 — Integration & Advanced Features
-Not yet started. See `_bmad-output/epics-stories.md` for full story list.
+| Story | Status | Description |
+|---|---|---|
+| E6-S1 | ✅ | Per-property email template system (Handlebars editor, preview, restore default) |
+| E6-S2 | ✅ | Per-property invoice PDF (@react-pdf/renderer, taxCode, bankAccount, payment history) |
+| E6-S3 | ✅ | Housekeeping realtime alerts + call-for-help dismiss broadcast to all staff screens |
+| E6-S4 | ✅ | Staff password reset & onboarding flow (forgot password, set-password, change password) |
+
+**E1-S7 tech notes:**
+- `packages/api/src/lib/storage.ts` — `uploadFile`, `getSignedUrl`, `deleteFile`, `getPublicUrl`, `processImage`, `roomPhotoKey`
+- Demo mode when `CLOUDFLARE_R2_ACCOUNT_ID` absent — returns `/demo-placeholder/{key}` URLs, upload is skipped
+- `sharp` library processes images to WebP 1920px max before upload
+- `apps/staff/src/app/api/upload/room-photo/route.ts` — POST multipart, validates 10 MB limit
+- `roomType.updatePhotos({ id, photoUrls })` — reorder/remove photos, persists to DB
+- Photo manager UI in `/settings/room-types` — thumbnail strip with move/delete, expand-in-place
+
+**E6 tech notes:**
+- `Property` schema: added `taxCode String?`, `bankAccount String?` (shown in invoice PDF and property settings)
+- Invoice PDF: `apps/staff/src/lib/invoice-pdf.tsx` using `@react-pdf/renderer`, served from `GET /api/invoices/[bookingId]`
+- Download button on folio page → `/api/invoices/[bookingId]` → returns `application/pdf` stream
+- `property.emailTemplate` — Handlebars HTML template, null = use default. Stored in DB.
+- Email template variables: `{{guestName}}`, `{{confirmationCode}}`, `{{checkIn}}`, `{{checkOut}}`, `{{roomType}}`, `{{propertyName}}`, `{{propertyAddress}}`, `{{qrCodeImage}}`
+- Alert dismiss: staff client emits `alert:dismiss` → server re-broadcasts `alert:dismissed` → all screens remove that alert
+- Staff onboarding: admin creates staff → onboarding token (72h) → email with `/set-password/[token]` link
+- Password reset: `/forgot-password` → email link → `/set-password/[token]?type=reset`
+- Staff schema: added `passwordResetToken String? @unique`, `passwordResetExpiry DateTime?`, `onboardingToken String? @unique`
 
 ## Domain Model
 

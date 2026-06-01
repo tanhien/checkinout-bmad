@@ -33,7 +33,7 @@ const ROLE_COLOR: Record<string, string> = {
 
 export function StaffClient({ staffList, currentStaffId }: { staffList: StaffMember[]; currentStaffId: string }) {
   const [showCreate, setShowCreate] = useState(false)
-  const [newStaffCreds, setNewStaffCreds] = useState<{ name: string; password: string } | null>(null)
+  const [newStaffName, setNewStaffName] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
   const [editRoleId, setEditRoleId] = useState<string | null>(null)
@@ -47,9 +47,7 @@ export function StaffClient({ staffList, currentStaffId }: { staffList: StaffMem
       if (res.error) { setError(res.error); return }
       setShowCreate(false)
       setError(null)
-      if (res.tempPassword) {
-        setNewStaffCreds({ name, password: res.tempPassword })
-      }
+      setNewStaffName(name)
     })
   }
 
@@ -84,12 +82,11 @@ export function StaffClient({ staffList, currentStaffId }: { staffList: StaffMem
 
       {error && <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
 
-      {newStaffCreds && (
+      {newStaffName && (
         <div className="rounded-lg border border-green-300 bg-green-50 p-4 space-y-2">
-          <p className="text-sm font-medium text-green-800">Tài khoản đã tạo cho {newStaffCreds.name}</p>
-          <p className="text-sm text-green-700">Mật khẩu tạm thời: <code className="rounded bg-white px-2 py-0.5 font-mono font-bold">{newStaffCreds.password}</code></p>
-          <p className="text-xs text-green-600">Vui lòng thông báo mật khẩu này cho nhân viên và yêu cầu đổi mật khẩu sau khi đăng nhập lần đầu.</p>
-          <button onClick={() => setNewStaffCreds(null)} className="text-xs text-green-700 hover:underline">Đóng</button>
+          <p className="text-sm font-medium text-green-800">✅ Tài khoản đã tạo cho {newStaffName}</p>
+          <p className="text-sm text-green-700">Email hướng dẫn thiết lập mật khẩu đã được gửi đến địa chỉ email của nhân viên (hiệu lực 72 giờ).</p>
+          <button onClick={() => setNewStaffName(null)} className="text-xs text-green-700 hover:underline">Đóng</button>
         </div>
       )}
 

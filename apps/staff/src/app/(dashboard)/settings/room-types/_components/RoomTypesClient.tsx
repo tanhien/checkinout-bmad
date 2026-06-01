@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react"
 import { createRoomTypeAction, updateRoomTypeAction, toggleRoomTypeAction } from "../actions"
+import { PhotoManager } from "./PhotoManager"
 
 type RoomType = {
   id: string
@@ -15,6 +16,7 @@ type RoomType = {
   basePrice: number
   isActive: boolean
   isFeatured: boolean
+  photoUrls: string[]
   _count: { rooms: number }
 }
 
@@ -91,9 +93,11 @@ function RoomTypeForm({
   )
 }
 
-export function RoomTypesClient({ roomTypes }: { roomTypes: RoomType[] }) {
+export function RoomTypesClient({ roomTypes: initial }: { roomTypes: RoomType[] }) {
+  const [roomTypes, setRoomTypes] = useState(initial)
   const [showCreate, setShowCreate] = useState(false)
   const [editId, setEditId] = useState<string | null>(null)
+  const [photosId, setPhotosId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
 
@@ -175,6 +179,7 @@ export function RoomTypesClient({ roomTypes }: { roomTypes: RoomType[] }) {
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex justify-end gap-2">
+                      <button onClick={() => setPhotosId(photosId === rt.id ? null : rt.id)} className="text-xs text-blue-600 hover:underline">Ảnh ({rt.photoUrls.length})</button>
                       <button onClick={() => setEditId(editId === rt.id ? null : rt.id)} className="text-xs text-blue-600 hover:underline">Sửa</button>
                       <button onClick={() => handleToggle(rt.id)} disabled={isPending} className="text-xs text-gray-500 hover:underline">
                         {rt.isActive ? "Tắt" : "Bật"}
@@ -182,6 +187,20 @@ export function RoomTypesClient({ roomTypes }: { roomTypes: RoomType[] }) {
                     </div>
                   </td>
                 </tr>
+                {photosId === rt.id && (
+                  <tr key={`photos-${rt.id}`}>
+                    <td colSpan={7} className="px-4 py-3 bg-gray-50">
+                      <p className="text-xs font-semibold text-gray-700 mb-2">Quản lý ảnh — {rt.name}</p>
+                      <PhotoManager
+                        roomTypeId={rt.id}
+                        photoUrls={rt.photoUrls}
+                        onPhotosChanged={(urls) =>
+                          setRoomTypes((prev) => prev.map((r) => r.id === rt.id ? { ...r, photoUrls: urls } : r))
+                        }
+                      />
+                    </td>
+                  </tr>
+                )}
                 {editId === rt.id && (
                   <tr key={`edit-${rt.id}`}>
                     <td colSpan={7} className="px-4 py-3">

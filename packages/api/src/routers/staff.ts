@@ -1,6 +1,8 @@
 import { z } from "zod"
 import { TRPCError } from "@trpc/server"
-import { router, staffProcedure, adminProcedure } from "../trpc"
+import { randomBytes } from "crypto"
+import bcrypt from "bcryptjs"
+import { router, staffProcedure, adminProcedure, publicProcedure } from "../trpc"
 
 export const staffRouter = router({
   listHousekeepingStaff: staffProcedure.query(async ({ ctx }) => {
@@ -42,7 +44,8 @@ export const staffRouter = router({
         lastName: z.string().min(1).max(100),
         email: z.string().email(),
         role: z.enum(["ADMIN", "MANAGER", "FRONT_DESK", "HOUSEKEEPING", "ACCOUNTANT"]),
-        passwordHash: z.string().min(10),
+        // Optional pre-set password; if omitted an onboarding token is generated
+        password: z.string().min(8).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -57,6 +60,16 @@ export const staffRouter = router({
         throw new TRPCError({ code: "CONFLICT", message: "Email already in use" })
       }
 
+      // If no password supplied, create a placeholder hash and generate onboarding token
+      const onboardingToken = input.password ? null : randomBytes(32).toString("hex")
+      const passwordHash = input.password
+        ? await bcrypt.hash(input.password, 12)
+        : await bcrypt.hash(randomBytes(16).toString("hex"), 12) // unusable placeholder
+
+      const onboardingExpiry = onboardingToken
+        ? new Date(Date.now() + 72 * 60 * 60 * 1000)
+        : null
+
       const staff = await ctx.db.staff.create({
         data: {
           propertyId: ctx.propertyId,
@@ -64,7 +77,9 @@ export const staffRouter = router({
           lastName: input.lastName,
           email: input.email.toLowerCase(),
           role: input.role,
-          passwordHash: input.passwordHash,
+          passwordHash,
+          onboardingToken,
+          passwordResetExpiry: onboardingExpiry,
         },
         select: {
           id: true,
@@ -74,6 +89,7 @@ export const staffRouter = router({
           role: true,
           isActive: true,
           createdAt: true,
+          onboardingToken: true,
         },
       })
 
@@ -87,7 +103,21 @@ export const staffRouter = router({
         },
       })
 
-      return staff
+      // Send onboarding email (fire-and-forget)
+      if (onboardingToken) {
+        const property = await ctx.db.property.findUnique({
+          where: { id: ctx.propertyId },
+          select: { name: true, email: true },
+        })
+        void sendStaffOnboardingEmail({
+          staffEmail: staff.email,
+          staffName: staff.firstName,
+          token: onboardingToken,
+          propertyName: property?.name ?? "Hotel",
+        })
+      }
+
+      return { ...staff, onboardingToken: undefined }
     }),
 
   updateRole: adminProcedure
@@ -162,4 +192,150 @@ export const staffRouter = router({
 
       return updated
     }),
+
+  // ── Public: validate onboarding/password-reset token ─────────────────────
+  validateResetToken: publicProcedure
+    .input(z.object({ token: z.string(), type: z.enum(["onboarding", "reset"]) }))
+    .query(async ({ ctx, input }) => {
+      const now = new Date()
+      const staff = input.type === "onboarding"
+        ? await ctx.db.staff.findFirst({
+            where: { onboardingToken: input.token, passwordResetExpiry: { gt: now } },
+            select: { id: true, firstName: true, email: true },
+          })
+        : await ctx.db.staff.findFirst({
+            where: { passwordResetToken: input.token, passwordResetExpiry: { gt: now } },
+            select: { id: true, firstName: true, email: true },
+          })
+
+      if (!staff) throw new TRPCError({ code: "NOT_FOUND", message: "INVALID_OR_EXPIRED_TOKEN" })
+      return { valid: true, staffId: staff.id, firstName: staff.firstName, email: staff.email }
+    }),
+
+  // ── Public: set password using token ─────────────────────────────────────
+  setPasswordByToken: publicProcedure
+    .input(z.object({
+      token: z.string(),
+      type: z.enum(["onboarding", "reset"]),
+      password: z.string().min(8).regex(/[A-Z]/, "Must contain uppercase")
+        .regex(/[0-9]/, "Must contain a number"),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const now = new Date()
+      const staff = input.type === "onboarding"
+        ? await ctx.db.staff.findFirst({
+            where: { onboardingToken: input.token, passwordResetExpiry: { gt: now } },
+          })
+        : await ctx.db.staff.findFirst({
+            where: { passwordResetToken: input.token, passwordResetExpiry: { gt: now } },
+          })
+
+      if (!staff) throw new TRPCError({ code: "BAD_REQUEST", message: "INVALID_OR_EXPIRED_TOKEN" })
+
+      const passwordHash = await bcrypt.hash(input.password, 12)
+      await ctx.db.staff.update({
+        where: { id: staff.id },
+        data: {
+          passwordHash,
+          onboardingToken: null,
+          passwordResetToken: null,
+          passwordResetExpiry: null,
+        },
+      })
+
+      return { success: true }
+    }),
+
+  // ── Public: request password reset email ─────────────────────────────────
+  forgotPassword: publicProcedure
+    .input(z.object({ email: z.string().email() }))
+    .mutation(async ({ ctx, input }) => {
+      const staff = await ctx.db.staff.findUnique({
+        where: { email: input.email.toLowerCase() },
+        select: { id: true, firstName: true, email: true, isActive: true },
+      })
+      // Always succeed — don't reveal whether email exists
+      if (!staff?.isActive) return { sent: true }
+
+      const token = randomBytes(32).toString("hex")
+      await ctx.db.staff.update({
+        where: { id: staff.id },
+        data: { passwordResetToken: token, passwordResetExpiry: new Date(Date.now() + 24 * 60 * 60 * 1000) },
+      })
+
+      void sendStaffPasswordResetEmail({ staffEmail: staff.email, staffName: staff.firstName, token })
+      return { sent: true }
+    }),
+
+  // ── Authenticated: change own password ───────────────────────────────────
+  changePassword: staffProcedure
+    .input(z.object({
+      oldPassword: z.string(),
+      newPassword: z.string().min(8).regex(/[A-Z]/, "Cần ít nhất 1 chữ hoa")
+        .regex(/[0-9]/, "Cần ít nhất 1 chữ số"),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const staff = await ctx.db.staff.findUnique({
+        where: { id: ctx.auth.staffId },
+        select: { id: true, passwordHash: true },
+      })
+      if (!staff) throw new TRPCError({ code: "NOT_FOUND", message: "Staff not found" })
+
+      const valid = await bcrypt.compare(input.oldPassword, staff.passwordHash)
+      if (!valid) throw new TRPCError({ code: "UNAUTHORIZED", message: "WRONG_OLD_PASSWORD" })
+
+      const passwordHash = await bcrypt.hash(input.newPassword, 12)
+      await ctx.db.staff.update({ where: { id: staff.id }, data: { passwordHash } })
+      return { success: true }
+    }),
 })
+
+// ─── Email helpers ────────────────────────────────────────────────────────────
+
+async function sendStaffOnboardingEmail(params: {
+  staffEmail: string
+  staffName: string
+  token: string
+  propertyName: string
+}): Promise<void> {
+  const { Resend } = await import("resend")
+  const key = process.env["RESEND_API_KEY"]
+  if (!key) return
+  const resend = new Resend(key)
+  const url = `${process.env["STAFF_BASE_URL"] ?? "http://localhost:3001"}/set-password/${params.token}`
+  await resend.emails.send({
+    from: `${params.propertyName} <noreply@hotel.local>`,
+    to: params.staffEmail,
+    subject: `Chào mừng ${params.staffName} — Thiết lập mật khẩu của bạn`,
+    html: `<body style="font-family:sans-serif;max-width:600px;margin:auto;padding:24px">
+<h2>Chào mừng bạn đến với ${params.propertyName}!</h2>
+<p>Kính gửi ${params.staffName},</p>
+<p>Tài khoản nhân viên của bạn đã được tạo. Vui lòng nhấp vào liên kết bên dưới để thiết lập mật khẩu (hiệu lực 72 giờ):</p>
+<p><a href="${url}" style="color:#1d4ed8">${url}</a></p>
+</body>`,
+  }).catch(() => {/* silent fail */})
+}
+
+async function sendStaffPasswordResetEmail(params: {
+  staffEmail: string
+  staffName: string
+  token: string
+}): Promise<void> {
+  const { Resend } = await import("resend")
+  const key = process.env["RESEND_API_KEY"]
+  if (!key) return
+  const resend = new Resend(key)
+  const url = `${process.env["STAFF_BASE_URL"] ?? "http://localhost:3001"}/set-password/${params.token}?type=reset`
+  await resend.emails.send({
+    from: "Hotel System <noreply@hotel.local>",
+    to: params.staffEmail,
+    subject: "Đặt lại mật khẩu tài khoản nhân viên",
+    html: `<body style="font-family:sans-serif;max-width:600px;margin:auto;padding:24px">
+<h2>Đặt lại mật khẩu</h2>
+<p>Kính gửi ${params.staffName},</p>
+<p>Nhấp vào liên kết để đặt lại mật khẩu (hiệu lực 24 giờ):</p>
+<p><a href="${url}" style="color:#1d4ed8">${url}</a></p>
+<p>Nếu bạn không yêu cầu, hãy bỏ qua email này.</p>
+</body>`,
+  }).catch(() => {/* silent fail */})
+}

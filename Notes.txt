@@ -34,3 +34,5 @@ Hãy lưu lại plan đầy đủ của hệ thống mà bạn đã tạo vào t
    Property ID: cmps9ltgd0000nwvitx0iwm0b
    Kiosk API Key: demo-kiosk-api-key-seed
    Admin login: admin@demo.hotel / Admin123!
+
+   tanhien@gmail.com 12345678

@@ -1,160 +1,387 @@
 {
-  "common.search": "Tìm phòng",
-  "common.checkin": "Ngày nhận phòng",
-  "common.checkout": "Ngày trả phòng",
-  "common.guests": "Số khách",
-  "common.adults": "Người lớn",
-  "common.children": "Trẻ em",
-  "common.book_now": "Đặt ngay",
-  "common.view_details": "Xem chi tiết",
-  "common.per_night": "/ đêm",
-  "common.total": "Tổng cộng",
-  "common.confirm": "Xác nhận",
-  "common.cancel": "Hủy",
-  "common.back": "Quay lại",
-  "common.next": "Tiếp tục",
-  "common.loading": "Đang tải...",
-  "common.error": "Đã xảy ra lỗi. Vui lòng thử lại.",
-  "common.nights": "đêm",
-  "common.from": "Từ",
-  "common.select": "Chọn",
-
-  "nav.home": "Trang chủ",
-  "nav.rooms": "Phòng",
-  "nav.about": "Giới thiệu",
-  "nav.contact": "Liên hệ",
-  "nav.my_bookings": "Đặt phòng của tôi",
-  "nav.login": "Đăng nhập",
-  "nav.register": "Đăng ký",
-  "nav.logout": "Đăng xuất",
-
-  "home.hero.cta": "Đặt phòng ngay",
-  "home.search.title": "Tìm phòng trống",
-  "home.search.btn": "Tìm phòng",
-  "home.featured.title": "Phòng nổi bật",
-  "home.featured.view_all": "Xem tất cả phòng",
-
-  "rooms.title": "Tất cả phòng",
-  "rooms.filter.price": "Giá",
-  "rooms.filter.capacity": "Sức chứa",
-  "rooms.filter.bed_type": "Loại giường",
-  "rooms.filter.amenities": "Tiện nghi",
-  "rooms.sort.price_asc": "Giá tăng dần",
-  "rooms.sort.price_desc": "Giá giảm dần",
-  "rooms.sort.area": "Diện tích",
-  "rooms.unavailable": "Hết phòng",
-  "rooms.area": "m²",
-  "rooms.select": "Chọn phòng này",
-  "rooms.no_results": "Không tìm thấy phòng phù hợp.",
-  "rooms.back_to_list": "Quay lại danh sách",
-  "rooms.amenities": "Tiện nghi phòng",
-  "rooms.policies": "Chính sách",
-  "rooms.book_this": "Đặt phòng này",
-
-  "book.title": "Đặt phòng",
-  "book.step1": "Xác nhận lựa chọn",
-  "book.step2": "Thông tin khách",
-  "book.step3": "Xem lại",
-  "book.step4": "Xác nhận",
-  "book.promo.label": "Mã khuyến mãi",
-  "book.promo.placeholder": "Nhập mã...",
-  "book.promo.apply": "Áp dụng",
-  "book.promo.valid": "Mã hợp lệ! Giảm",
-  "book.promo.invalid": "Mã không hợp lệ hoặc đã hết hạn.",
-  "book.guest.first_name": "Tên *",
-  "book.guest.last_name": "Họ *",
-  "book.guest.email": "Email *",
-  "book.guest.phone": "Số điện thoại",
-  "book.guest.nationality": "Quốc tịch",
-  "book.guest.id_number": "Số CCCD/Hộ chiếu",
-  "book.guest.arrival_time": "Giờ đến dự kiến",
-  "book.guest.requests": "Yêu cầu đặc biệt",
-  "book.guest.save_profile": "Lưu thông tin cho lần sau",
-  "book.summary.room": "Phòng",
-  "book.summary.dates": "Ngày lưu trú",
-  "book.summary.guests": "Số khách",
-  "book.summary.rate": "Giá/đêm",
-  "book.summary.nights": "Số đêm",
-  "book.summary.subtotal": "Tạm tính",
-  "book.summary.discount": "Giảm giá",
-  "book.summary.total": "Tổng cộng",
-  "book.terms.agree": "Tôi đồng ý với điều khoản và chính sách hủy phòng",
-  "book.confirm_btn": "Xác nhận đặt phòng",
-  "book.cancel_policy": "Chính sách hủy phòng",
-  "book.pay_at_property": "Thanh toán tại khách sạn khi nhận phòng.",
-  "book.no_availability": "Phòng vừa hết chỗ. Vui lòng chọn ngày khác.",
-
-  "confirmation.title": "Đặt phòng thành công!",
-  "confirmation.code_label": "Mã xác nhận",
-  "confirmation.copy": "Sao chép",
-  "confirmation.copied": "Đã sao chép!",
-  "confirmation.qr_instruction": "Dùng mã QR này để check-in tại kiosk",
-  "confirmation.add_calendar": "Thêm vào Google Calendar",
-  "confirmation.print": "In trang này",
-  "confirmation.manage": "Quản lý đặt phòng",
-  "confirmation.details": "Chi tiết đặt phòng",
-  "confirmation.email_sent": "Email xác nhận đã được gửi đến",
-
-  "auth.login.title": "Đăng nhập",
-  "auth.login.email": "Email",
-  "auth.login.password": "Mật khẩu",
-  "auth.login.remember": "Ghi nhớ đăng nhập (30 ngày)",
-  "auth.login.forgot": "Quên mật khẩu?",
-  "auth.login.btn": "Đăng nhập",
-  "auth.login.no_account": "Chưa có tài khoản?",
-  "auth.login.register_link": "Đăng ký ngay",
-
-  "auth.register.title": "Tạo tài khoản",
-  "auth.register.first_name": "Tên *",
-  "auth.register.last_name": "Họ *",
-  "auth.register.email": "Email *",
-  "auth.register.phone": "Số điện thoại",
-  "auth.register.password": "Mật khẩu *",
-  "auth.register.btn": "Tạo tài khoản",
-  "auth.register.have_account": "Đã có tài khoản?",
-  "auth.register.login_link": "Đăng nhập",
-
-  "auth.forgot.title": "Quên mật khẩu",
-  "auth.forgot.instruction": "Nhập email của bạn và chúng tôi sẽ gửi link đặt lại mật khẩu.",
-  "auth.forgot.email": "Email *",
-  "auth.forgot.btn": "Gửi link đặt lại",
-  "auth.forgot.sent": "Nếu email tồn tại, chúng tôi đã gửi link đặt lại mật khẩu.",
-
-  "auth.reset.title": "Đặt lại mật khẩu",
-  "auth.reset.password": "Mật khẩu mới *",
-  "auth.reset.btn": "Đặt lại mật khẩu",
-  "auth.reset.success": "Mật khẩu đã được đặt lại. Vui lòng đăng nhập.",
-
-  "bookings.title": "Đặt phòng của tôi",
-  "bookings.tab.upcoming": "Sắp tới",
-  "bookings.tab.past": "Đã ở",
-  "bookings.tab.cancelled": "Đã hủy",
-  "bookings.empty": "Không có đặt phòng nào.",
-  "bookings.detail.title": "Chi tiết đặt phòng",
-  "bookings.cancel_btn": "Hủy đặt phòng",
-  "bookings.cancel.confirm": "Xác nhận hủy?",
-  "bookings.cancel.success": "Đặt phòng đã được hủy.",
-  "bookings.lookup.title": "Tra cứu đặt phòng",
-  "bookings.lookup.code": "Mã đặt phòng",
-  "bookings.lookup.email": "Email",
-  "bookings.lookup.btn": "Tra cứu",
-  "bookings.lookup.not_found": "Không tìm thấy đặt phòng.",
-
-  "about.title": "Giới thiệu",
-  "amenities.title": "Tiện nghi",
-  "contact.title": "Liên hệ",
-  "contact.address": "Địa chỉ",
-  "contact.phone": "Điện thoại",
-  "contact.email": "Email",
-  "contact.map": "Xem bản đồ",
-  "contact.form.title": "Gửi tin nhắn",
-  "contact.form.name": "Họ tên *",
-  "contact.form.email": "Email *",
-  "contact.form.message": "Nội dung *",
-  "contact.form.btn": "Gửi",
-  "contact.form.sent": "Tin nhắn đã được gửi!",
-
-  "footer.rights": "Tất cả quyền được bảo lưu.",
-  "footer.privacy": "Chính sách bảo mật",
-  "footer.terms": "Điều khoản sử dụng"
+  "common": {
+    "search": "Tìm phòng",
+    "checkin": "Ngày nhận phòng",
+    "checkout": "Ngày trả phòng",
+    "guests": "Số khách",
+    "adults": "Người lớn",
+    "children": "Trẻ em",
+    "book_now": "Đặt ngay",
+    "view_details": "Xem chi tiết",
+    "per_night": "/ đêm",
+    "total": "Tổng cộng",
+    "confirm": "Xác nhận",
+    "cancel": "Hủy",
+    "back": "Quay lại",
+    "next": "Tiếp tục",
+    "loading": "Đang tải...",
+    "error": "Đã xảy ra lỗi. Vui lòng thử lại.",
+    "nights": "đêm",
+    "from": "Từ",
+    "select": "Chọn"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "rooms": "Phòng",
+    "about": "Giới thiệu",
+    "amenities": "Tiện nghi",
+    "contact": "Liên hệ",
+    "my_bookings": "Đặt phòng của tôi",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "logout": "Đăng xuất"
+  },
+  "home": {
+    "hero": {
+      "cta": "Khám phá phòng"
+    },
+    "search": {
+      "title": "Tìm phòng trống",
+      "btn": "Tìm phòng"
+    },
+    "featured": {
+      "title": "Phòng nổi bật",
+      "view_all": "Xem tất cả phòng"
+    },
+    "flash": {
+      "title": "Ưu đãi Flash",
+      "subtitle": "Ưu đãi có thời hạn — đặt ngay để tiết kiệm tối đa!",
+      "code_label": "Dùng mã",
+      "copy": "Sao chép",
+      "copied": "Đã sao chép!",
+      "book_btn": "Đặt ngay"
+    },
+    "why": {
+      "title": "Tại sao chọn chúng tôi",
+      "free_cancel": {
+        "title": "Hủy miễn phí",
+        "desc": "Hủy phòng trước 48 giờ check-in, không tốn phí."
+      },
+      "best_price": {
+        "title": "Giá tốt nhất",
+        "desc": "Tìm được giá thấp hơn? Chúng tôi sẽ match và giảm thêm 5%."
+      },
+      "heritage": {
+        "title": "Di sản UNESCO",
+        "desc": "Chỉ vài bước chân từ Phố cổ Hội An — Di sản Thế giới UNESCO."
+      },
+      "spa": {
+        "title": "Spa & Sức khỏe",
+        "desc": "Spa và hồ bơi ngay trong khuôn viên để thư giãn hoàn toàn."
+      }
+    }
+  },
+  "rooms": {
+    "title": "Tất cả phòng",
+    "filter": {
+      "price": "Giá",
+      "capacity": "Sức chứa",
+      "bed_type": "Loại giường",
+      "amenities": "Tiện nghi"
+    },
+    "sort": {
+      "price_asc": "Giá tăng dần",
+      "price_desc": "Giá giảm dần",
+      "area": "Diện tích"
+    },
+    "unavailable": "Hết phòng",
+    "area": "m²",
+    "select": "Chọn phòng này",
+    "no_results": "Không tìm thấy phòng phù hợp.",
+    "back_to_list": "Quay lại danh sách",
+    "amenities": "Tiện nghi phòng",
+    "policies": "Chính sách",
+    "book_this": "Đặt phòng này"
+  },
+  "book": {
+    "title": "Đặt phòng",
+    "step1": "Xác nhận lựa chọn",
+    "step2": "Thông tin khách",
+    "step3": "Xem lại",
+    "step4": "Xác nhận",
+    "promo": {
+      "label": "Mã khuyến mãi",
+      "placeholder": "Nhập mã...",
+      "apply": "Áp dụng",
+      "valid": "Mã hợp lệ! Giảm",
+      "invalid": "Mã không hợp lệ hoặc đã hết hạn."
+    },
+    "guest": {
+      "first_name": "Tên *",
+      "last_name": "Họ *",
+      "email": "Email *",
+      "phone": "Số điện thoại",
+      "nationality": "Quốc tịch",
+      "id_number": "Số CCCD/Hộ chiếu",
+      "arrival_time": "Giờ đến dự kiến",
+      "requests": "Yêu cầu đặc biệt",
+      "save_profile": "Lưu thông tin cho lần sau"
+    },
+    "summary": {
+      "room": "Phòng",
+      "dates": "Ngày lưu trú",
+      "guests": "Số khách",
+      "rate": "Giá/đêm",
+      "nights": "Số đêm",
+      "subtotal": "Tạm tính",
+      "discount": "Giảm giá",
+      "total": "Tổng cộng"
+    },
+    "terms": {
+      "agree": "Tôi đồng ý với điều khoản và chính sách hủy phòng"
+    },
+    "confirm_btn": "Xác nhận đặt phòng",
+    "cancel_policy": "Chính sách hủy phòng",
+    "pay_at_property": "Thanh toán tại khách sạn khi nhận phòng.",
+    "no_availability": "Phòng vừa hết chỗ. Vui lòng chọn ngày khác."
+  },
+  "confirmation": {
+    "title": "Đặt phòng thành công!",
+    "code_label": "Mã xác nhận",
+    "copy": "Sao chép",
+    "copied": "Đã sao chép!",
+    "qr_instruction": "Dùng mã QR này để check-in tại kiosk",
+    "add_calendar": "Thêm vào Google Calendar",
+    "print": "In trang này",
+    "manage": "Quản lý đặt phòng",
+    "details": "Chi tiết đặt phòng",
+    "email_sent": "Email xác nhận đã được gửi đến"
+  },
+  "auth": {
+    "login": {
+      "title": "Đăng nhập",
+      "email": "Email",
+      "password": "Mật khẩu",
+      "remember": "Ghi nhớ đăng nhập (30 ngày)",
+      "forgot": "Quên mật khẩu?",
+      "btn": "Đăng nhập",
+      "no_account": "Chưa có tài khoản?",
+      "register_link": "Đăng ký ngay"
+    },
+    "register": {
+      "title": "Tạo tài khoản",
+      "first_name": "Tên *",
+      "last_name": "Họ *",
+      "email": "Email *",
+      "phone": "Số điện thoại",
+      "password": "Mật khẩu *",
+      "btn": "Tạo tài khoản",
+      "have_account": "Đã có tài khoản?",
+      "login_link": "Đăng nhập"
+    },
+    "forgot": {
+      "title": "Quên mật khẩu",
+      "instruction": "Nhập email của bạn và chúng tôi sẽ gửi link đặt lại mật khẩu.",
+      "email": "Email *",
+      "btn": "Gửi link đặt lại",
+      "sent": "Nếu email tồn tại, chúng tôi đã gửi link đặt lại mật khẩu."
+    },
+    "reset": {
+      "title": "Đặt lại mật khẩu",
+      "password": "Mật khẩu mới *",
+      "btn": "Đặt lại mật khẩu",
+      "success": "Mật khẩu đã được đặt lại. Vui lòng đăng nhập."
+    }
+  },
+  "bookings": {
+    "title": "Đặt phòng của tôi",
+    "tab": {
+      "upcoming": "Sắp tới",
+      "past": "Đã ở",
+      "cancelled": "Đã hủy"
+    },
+    "empty": "Không có đặt phòng nào.",
+    "detail": {
+      "title": "Chi tiết đặt phòng"
+    },
+    "cancel_btn": "Hủy đặt phòng",
+    "cancel": {
+      "confirm": "Xác nhận hủy?",
+      "success": "Đặt phòng đã được hủy."
+    },
+    "lookup": {
+      "title": "Tra cứu đặt phòng",
+      "code": "Mã đặt phòng",
+      "email": "Email",
+      "btn": "Tra cứu",
+      "not_found": "Không tìm thấy đặt phòng."
+    }
+  },
+  "about": {
+    "title": "Giới thiệu",
+    "story_title": "Câu chuyện của chúng tôi",
+    "story": "Tọa lạc tại trung tâm Phố cổ Hội An — Di sản Thế giới UNESCO — Lạc Hồng Boutique Hotel & Spa được thành lập năm 2012 với một tầm nhìn duy nhất: tạo ra một thánh địa nghỉ dưỡng nơi di sản Việt Nam và xa xỉ hiện đại cùng tồn tại hài hòa.\n\nTrải qua hơn một thập kỷ đón tiếp du khách từ khắp nơi trên thế giới, chúng tôi đã phát triển từ một nhà nghỉ nhỏ 8 phòng thành một khách sạn boutique đầy đủ dịch vụ, trong khi vẫn duy trì sự ấm áp và chú tâm cá nhân là nét đặc trưng của chúng tôi. Mỗi góc của khách sạn đều kể một câu chuyện: đồ sơn mài thủ công, tranh thêu lụa, và gỗ Hội An tái chế — tất cả đều từ các nghệ nhân địa phương.\n\nHôm nay, Lạc Hồng tự hào là điểm đến yêu thích của hàng nghìn du khách mỗi năm, mang đến không chỉ nơi để nghỉ ngơi mà còn là trải nghiệm kết nối bạn với tâm hồn của Hội An.",
+    "awards_title": "Giải thưởng & Ghi nhận",
+    "awards": [
+      "TripAdvisor Travellers' Choice 2022, 2023, 2024",
+      "Booking.com Guest Review Award — Điểm 9.2+",
+      "Top 10 Boutique Hotel Miền Trung Việt Nam — Travel+Leisure 2023",
+      "Chứng nhận Khách sạn Xanh — Bộ Văn hóa, Thể thao và Du lịch"
+    ],
+    "policies_title": "Chính sách khách sạn",
+    "policies": {
+      "checkin": {
+        "label": "Nhận phòng",
+        "value": "Từ 14:00 (2 giờ chiều). Nhận phòng sớm tùy theo tình trạng phòng."
+      },
+      "checkout": {
+        "label": "Trả phòng",
+        "value": "Trước 12:00 (trưa). Trả phòng muộn có thể đặt theo yêu cầu."
+      },
+      "cancel": {
+        "label": "Hủy phòng",
+        "value": "Hủy miễn phí trước 48 giờ check-in. Đặt phòng không hoàn tiền không thể hủy."
+      },
+      "children": {
+        "label": "Trẻ em",
+        "value": "Trẻ em dưới 12 tuổi được miễn phí khi sử dụng giường có sẵn. Giường phụ có thêm phí."
+      },
+      "pets": {
+        "label": "Thú cưng",
+        "value": "Không cho phép mang thú cưng vào khuôn viên khách sạn."
+      },
+      "smoking": {
+        "label": "Hút thuốc",
+        "value": "Toàn bộ khách sạn không hút thuốc. Có khu vực hút thuốc riêng tại lối vào chính."
+      },
+      "payment": {
+        "label": "Thanh toán",
+        "value": "Chấp nhận tiền mặt (VNĐ), Visa, Mastercard và thẻ ATM nội địa. Thanh toán khi nhận phòng."
+      }
+    },
+    "location_title": "Vị trí",
+    "location_desc": "Chúng tôi tọa lạc tại 48 Trần Hưng Đạo, Phường Minh An — chỉ 5 phút đi bộ từ Chùa Cầu nổi tiếng và Chợ Đêm sôi động. Các điểm tham quan chính, nhà hàng và tiệm may của phố cổ đều trong tầm đi bộ.",
+    "team_title": "Đội ngũ của chúng tôi",
+    "team_desc": "Đội ngũ 45 chuyên gia khách sạn của chúng tôi phục vụ 24/7. Từ bộ phận concierge am hiểu từng ngóc ngách Hội An, đến các chuyên viên spa được đào tạo về kỹ thuật massage truyền thống Việt Nam, chúng tôi cam kết mang đến kỳ lưu trú đặc biệt cho bạn."
+  },
+  "amenities": {
+    "title": "Tiện nghi khách sạn",
+    "subtitle": "Tất cả những gì bạn cần cho một kỳ nghỉ hoàn hảo",
+    "property_amenities": "Tiện nghi chung",
+    "room_amenities": "Tiện nghi trong phòng"
+  },
+  "contact": {
+    "title": "Liên hệ",
+    "address": "Địa chỉ",
+    "phone": "Điện thoại",
+    "email": "Email",
+    "hours": "Giờ lễ tân",
+    "hours_value": "Mở cửa 24/7",
+    "map": "Xem bản đồ",
+    "social": "Theo dõi chúng tôi",
+    "form": {
+      "title": "Gửi tin nhắn",
+      "name": "Họ tên *",
+      "email": "Email *",
+      "subject": "Chủ đề",
+      "message": "Nội dung *",
+      "btn": "Gửi tin nhắn",
+      "sent": "Tin nhắn đã được gửi! Chúng tôi sẽ phản hồi trong vòng 24 giờ.",
+      "subjects": {
+        "reservation": "Hỏi về đặt phòng",
+        "group": "Đặt phòng đoàn",
+        "event": "Sự kiện & Hội nghị",
+        "feedback": "Góp ý",
+        "other": "Khác"
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Nơi truyền thống gặp gỡ sang trọng hiện đại",
+    "rights": "Tất cả quyền được bảo lưu.",
+    "privacy": "Chính sách bảo mật",
+    "terms": "Điều khoản sử dụng",
+    "quick_links": "Liên kết nhanh",
+    "follow": "Theo dõi chúng tôi"
+  },
+  "privacy": {
+    "title": "Chính sách bảo mật",
+    "updated": "Cập nhật lần cuối: 01/01/2026",
+    "intro": "Lạc Hồng Boutique Hotel & Spa (\"chúng tôi\", \"khách sạn\") cam kết bảo vệ thông tin cá nhân của bạn. Chính sách bảo mật này giải thích cách chúng tôi thu thập, sử dụng và bảo vệ dữ liệu của bạn khi bạn sử dụng website và dịch vụ đặt phòng trực tuyến của chúng tôi.",
+    "sections": [
+      {
+        "title": "1. Thông tin chúng tôi thu thập",
+        "content": "Chúng tôi thu thập các thông tin sau khi bạn đặt phòng hoặc liên hệ với chúng tôi:\n• Thông tin định danh: Họ tên, ngày sinh, số CCCD/Hộ chiếu, quốc tịch\n• Thông tin liên lạc: Địa chỉ email, số điện thoại\n• Thông tin đặt phòng: Ngày nhận/trả phòng, loại phòng, yêu cầu đặc biệt\n• Thông tin thanh toán: Loại thẻ, 4 số cuối thẻ (chúng tôi không lưu trữ số thẻ đầy đủ)\n• Dữ liệu kỹ thuật: Địa chỉ IP, loại trình duyệt, cookie phiên làm việc"
+      },
+      {
+        "title": "2. Mục đích sử dụng thông tin",
+        "content": "Chúng tôi sử dụng thông tin của bạn để:\n• Xử lý và quản lý đặt phòng của bạn\n• Gửi email xác nhận đặt phòng và thông tin lưu trú\n• Cung cấp dịch vụ chăm sóc khách hàng\n• Cải thiện chất lượng dịch vụ thông qua phân tích dữ liệu ẩn danh\n• Tuân thủ các quy định pháp luật về đăng ký lưu trú\n• Gửi thông tin khuyến mãi (nếu bạn đồng ý nhận)"
+      },
+      {
+        "title": "3. Bảo mật dữ liệu",
+        "content": "Chúng tôi áp dụng các biện pháp bảo mật kỹ thuật và tổ chức phù hợp để bảo vệ thông tin cá nhân của bạn, bao gồm:\n• Mã hóa SSL/TLS cho tất cả kết nối\n• Mã hóa AES-256 cho dữ liệu nhạy cảm (số CCCD/Hộ chiếu)\n• Kiểm soát truy cập nghiêm ngặt đối với nhân viên xử lý dữ liệu\n• Hệ thống tường lửa và giám sát bảo mật 24/7"
+      },
+      {
+        "title": "4. Chia sẻ thông tin",
+        "content": "Chúng tôi không bán, trao đổi hoặc cho thuê thông tin cá nhân của bạn với bên thứ ba, ngoại trừ:\n• Cơ quan nhà nước khi được yêu cầu hợp pháp (cơ quan công an, thuế)\n• Đối tác thanh toán để xử lý giao dịch (theo tiêu chuẩn PCI-DSS)\n• Nhà cung cấp dịch vụ email để gửi thông báo đặt phòng"
+      },
+      {
+        "title": "5. Cookie",
+        "content": "Website sử dụng cookie để cải thiện trải nghiệm duyệt web. Cookie phiên làm việc được xóa khi bạn đóng trình duyệt. Cookie ghi nhớ đăng nhập có thời hạn 30 ngày. Bạn có thể tắt cookie trong cài đặt trình duyệt, tuy nhiên một số tính năng có thể không hoạt động đúng."
+      },
+      {
+        "title": "6. Quyền của bạn",
+        "content": "Bạn có quyền:\n• Truy cập và xem thông tin cá nhân chúng tôi lưu trữ về bạn\n• Yêu cầu chỉnh sửa thông tin không chính xác\n• Yêu cầu xóa tài khoản và dữ liệu cá nhân\n• Rút lại sự đồng ý nhận email tiếp thị bất kỳ lúc nào\n\nĐể thực hiện các quyền này, vui lòng liên hệ: info@lachonghotel.vn"
+      },
+      {
+        "title": "7. Thời gian lưu trữ",
+        "content": "Chúng tôi lưu trữ thông tin đặt phòng và thông tin khách hàng trong 5 năm kể từ lần lưu trú cuối cùng theo quy định pháp luật về lưu trữ hồ sơ khách sạn. Tài khoản không hoạt động trong 3 năm sẽ được thông báo và xóa sau 30 ngày."
+      },
+      {
+        "title": "8. Thay đổi chính sách",
+        "content": "Chúng tôi có thể cập nhật Chính sách bảo mật này theo thời gian. Thay đổi quan trọng sẽ được thông báo qua email hoặc thông báo nổi bật trên website ít nhất 7 ngày trước khi có hiệu lực."
+      },
+      {
+        "title": "9. Liên hệ",
+        "content": "Nếu bạn có câu hỏi về Chính sách bảo mật này, vui lòng liên hệ:\n\nLạc Hồng Boutique Hotel & Spa\n48 Trần Hưng Đạo, Phường Minh An, Hội An, Quảng Nam\nEmail: info@lachonghotel.vn\nĐiện thoại: +84 235 391 8888"
+      }
+    ]
+  },
+  "terms": {
+    "title": "Điều khoản sử dụng",
+    "updated": "Cập nhật lần cuối: 01/01/2026",
+    "intro": "Bằng việc truy cập và sử dụng website đặt phòng trực tuyến của Lạc Hồng Boutique Hotel & Spa, bạn đồng ý tuân theo các điều khoản và điều kiện dưới đây. Vui lòng đọc kỹ trước khi tiến hành đặt phòng.",
+    "sections": [
+      {
+        "title": "1. Chính sách đặt phòng",
+        "content": "1.1. Mọi đặt phòng qua website đều yêu cầu thông tin khách hàng chính xác. Khách sạn có quyền hủy đặt phòng nếu phát hiện thông tin sai lệch.\n\n1.2. Xác nhận đặt phòng sẽ được gửi qua email trong vòng 15 phút sau khi hoàn tất. Mã xác nhận (HTL-XXXX-XXXXXX) là bằng chứng đặt phòng hợp lệ.\n\n1.3. Mỗi đặt phòng tương ứng với một mã xác nhận duy nhất. Vui lòng lưu giữ mã này để check-in."
+      },
+      {
+        "title": "2. Chính sách hủy phòng và hoàn tiền",
+        "content": "2.1. Giá linh hoạt: Hủy miễn phí trước 48 giờ tính từ 14:00 ngày nhận phòng. Hủy muộn hơn sẽ bị tính phí 1 đêm đầu tiên.\n\n2.2. Giá không hoàn tiền: Không áp dụng hoàn tiền trong bất kỳ trường hợp nào.\n\n2.3. Hoàn tiền (nếu áp dụng) sẽ được xử lý trong 5–10 ngày làm việc về phương thức thanh toán ban đầu.\n\n2.4. Trường hợp bất khả kháng (thiên tai, dịch bệnh được công bố chính thức): Khách sạn sẽ xem xét hoàn tiền hoặc đổi ngày theo từng trường hợp cụ thể."
+      },
+      {
+        "title": "3. Chính sách nhận phòng & trả phòng",
+        "content": "3.1. Nhận phòng (Check-in): Từ 14:00. Nhận phòng sớm tùy theo tình trạng phòng (có thể có phụ phí).\n\n3.2. Trả phòng (Check-out): Trước 12:00 (trưa). Trả phòng muộn tính phí 50% giá phòng/ngày nếu sau 18:00.\n\n3.3. Khách phải xuất trình CCCD/Hộ chiếu hợp lệ khi nhận phòng.\n\n3.4. Thẻ tín dụng hoặc tiền mặt đặt cọc tương đương 1 đêm phòng sẽ được thu khi check-in và hoàn trả khi check-out nếu không có thiệt hại."
+      },
+      {
+        "title": "4. Quy tắc lưu trú",
+        "content": "4.1. Toàn bộ khách sạn áp dụng chính sách không hút thuốc. Vi phạm sẽ bị phạt 1.000.000 VNĐ.\n\n4.2. Không cho phép mang thú cưng vào khuôn viên khách sạn.\n\n4.3. Giờ yên tĩnh: 22:00 – 07:00. Tránh gây tiếng ồn ảnh hưởng đến khách khác.\n\n4.4. Không được tự ý mang khách bên ngoài vào phòng sau 22:00 mà không đăng ký với lễ tân.\n\n4.5. Khách sạn có quyền từ chối phục vụ hoặc yêu cầu rời khỏi khách sạn trong trường hợp vi phạm nghiêm trọng quy tắc lưu trú."
+      },
+      {
+        "title": "5. Trách nhiệm của khách hàng",
+        "content": "5.1. Khách hàng chịu trách nhiệm về mọi thiệt hại đối với tài sản của khách sạn trong thời gian lưu trú.\n\n5.2. Khách sạn không chịu trách nhiệm về tài sản cá nhân của khách hàng bị mất, hư hỏng trừ khi do lỗi trực tiếp của nhân viên khách sạn.\n\n5.3. Két sắt trong phòng miễn phí sử dụng — khuyến khích khách bảo quản tài sản giá trị."
+      },
+      {
+        "title": "6. Giá phòng và thuế",
+        "content": "6.1. Tất cả giá niêm yết trên website đã bao gồm thuế VAT 10% theo quy định.\n\n6.2. Phí dịch vụ (nếu có) sẽ được thông báo rõ ràng trước khi xác nhận đặt phòng.\n\n6.3. Khách sạn có quyền điều chỉnh giá phòng mà không cần thông báo trước, nhưng giá đã xác nhận đặt phòng sẽ được giữ nguyên."
+      },
+      {
+        "title": "7. Mã khuyến mãi",
+        "content": "7.1. Mỗi mã khuyến mãi chỉ được sử dụng một lần và không thể kết hợp với ưu đãi khác.\n\n7.2. Mã khuyến mãi có thời hạn sử dụng và điều kiện áp dụng riêng. Khách sạn có quyền thu hồi mã trong trường hợp lạm dụng.\n\n7.3. Giá trị khuyến mãi không quy đổi thành tiền mặt."
+      },
+      {
+        "title": "8. Giới hạn trách nhiệm",
+        "content": "8.1. Khách sạn nỗ lực duy trì website hoạt động liên tục nhưng không đảm bảo website không có sự cố kỹ thuật.\n\n8.2. Trong trường hợp sự cố kỹ thuật ảnh hưởng đến đặt phòng, khách sạn sẽ liên hệ trực tiếp qua email hoặc điện thoại để giải quyết.\n\n8.3. Trách nhiệm tối đa của khách sạn trong mọi trường hợp không vượt quá giá trị đặt phòng đã thanh toán."
+      },
+      {
+        "title": "9. Luật áp dụng",
+        "content": "Các điều khoản này được điều chỉnh bởi pháp luật nước Cộng hòa Xã hội Chủ nghĩa Việt Nam. Mọi tranh chấp sẽ được giải quyết tại Tòa án nhân dân có thẩm quyền tại tỉnh Quảng Nam, Việt Nam."
+      },
+      {
+        "title": "10. Liên hệ",
+        "content": "Lạc Hồng Boutique Hotel & Spa\n48 Trần Hưng Đạo, Phường Minh An, Hội An, Quảng Nam\nEmail: info@lachonghotel.vn | Điện thoại: +84 235 391 8888\nGiờ làm việc: 24/7"
+      }
+    ]
+  }
 }

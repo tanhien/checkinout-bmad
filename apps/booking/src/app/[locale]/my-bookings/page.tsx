@@ -40,7 +40,7 @@ export default async function MyBookingsPage({ params }: Props) {
           {t("bookings.lookup.title")} →
         </Link>
       </div>
-      <MyBookingsClient bookings={bookings} locale={locale} />
+      <MyBookingsClient bookings={bookings} locale={locale} guestEmail={session.email} />
     </div>
   )
 }

@@ -16,6 +16,10 @@ const eslintConfig = [
     rules: {
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+      // Disable experimental React Compiler rules — too strict for existing patterns
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/purity": "off",
+      "react-hooks/ref-in-render": "off",
     },
   },
 ]

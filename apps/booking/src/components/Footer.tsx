@@ -11,16 +11,18 @@ export async function Footer({ propertyName }: { propertyName: string }) {
         <div className="flex flex-col md:flex-row justify-between items-start gap-8">
           <div>
             <p className="text-white font-semibold text-base mb-2">{propertyName}</p>
+            <p className="text-gray-500 text-xs mb-3 max-w-xs">{t("footer.tagline")}</p>
             <nav className="flex flex-col gap-1.5">
               <Link href={`/${locale}`} className="hover:text-white transition-colors">{t("nav.home")}</Link>
               <Link href={`/${locale}/rooms`} className="hover:text-white transition-colors">{t("nav.rooms")}</Link>
               <Link href={`/${locale}/about`} className="hover:text-white transition-colors">{t("nav.about")}</Link>
+              <Link href={`/${locale}/amenities`} className="hover:text-white transition-colors">{t("nav.amenities")}</Link>
               <Link href={`/${locale}/contact`} className="hover:text-white transition-colors">{t("nav.contact")}</Link>
             </nav>
           </div>
-          <div className="flex gap-6 text-xs">
-            <Link href="#" className="hover:text-white transition-colors">{t("footer.privacy")}</Link>
-            <Link href="#" className="hover:text-white transition-colors">{t("footer.terms")}</Link>
+          <div className="flex flex-col gap-2 text-xs">
+            <Link href={`/${locale}/privacy`} className="hover:text-white transition-colors">{t("footer.privacy")}</Link>
+            <Link href={`/${locale}/terms`} className="hover:text-white transition-colors">{t("footer.terms")}</Link>
           </div>
         </div>
         <div className="mt-8 pt-6 border-t border-gray-800 text-xs text-gray-600">

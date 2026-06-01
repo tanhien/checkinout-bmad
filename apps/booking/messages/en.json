@@ -1,160 +1,387 @@
 {
-  "common.search": "Search Rooms",
-  "common.checkin": "Check-in Date",
-  "common.checkout": "Check-out Date",
-  "common.guests": "Guests",
-  "common.adults": "Adults",
-  "common.children": "Children",
-  "common.book_now": "Book Now",
-  "common.view_details": "View Details",
-  "common.per_night": "/ night",
-  "common.total": "Total",
-  "common.confirm": "Confirm",
-  "common.cancel": "Cancel",
-  "common.back": "Back",
-  "common.next": "Continue",
-  "common.loading": "Loading...",
-  "common.error": "An error occurred. Please try again.",
-  "common.nights": "nights",
-  "common.from": "From",
-  "common.select": "Select",
-
-  "nav.home": "Home",
-  "nav.rooms": "Rooms",
-  "nav.about": "About",
-  "nav.contact": "Contact",
-  "nav.my_bookings": "My Bookings",
-  "nav.login": "Log In",
-  "nav.register": "Register",
-  "nav.logout": "Log Out",
-
-  "home.hero.cta": "Book Now",
-  "home.search.title": "Find Available Rooms",
-  "home.search.btn": "Search Rooms",
-  "home.featured.title": "Featured Rooms",
-  "home.featured.view_all": "View All Rooms",
-
-  "rooms.title": "All Rooms",
-  "rooms.filter.price": "Price",
-  "rooms.filter.capacity": "Capacity",
-  "rooms.filter.bed_type": "Bed Type",
-  "rooms.filter.amenities": "Amenities",
-  "rooms.sort.price_asc": "Price: Low to High",
-  "rooms.sort.price_desc": "Price: High to Low",
-  "rooms.sort.area": "Area",
-  "rooms.unavailable": "Unavailable",
-  "rooms.area": "m²",
-  "rooms.select": "Select This Room",
-  "rooms.no_results": "No rooms found.",
-  "rooms.back_to_list": "Back to List",
-  "rooms.amenities": "Room Amenities",
-  "rooms.policies": "Policies",
-  "rooms.book_this": "Book This Room",
-
-  "book.title": "Book a Room",
-  "book.step1": "Confirm Selection",
-  "book.step2": "Guest Info",
-  "book.step3": "Review",
-  "book.step4": "Confirm",
-  "book.promo.label": "Promo Code",
-  "book.promo.placeholder": "Enter code...",
-  "book.promo.apply": "Apply",
-  "book.promo.valid": "Code applied! Discount:",
-  "book.promo.invalid": "Invalid or expired promo code.",
-  "book.guest.first_name": "First Name *",
-  "book.guest.last_name": "Last Name *",
-  "book.guest.email": "Email *",
-  "book.guest.phone": "Phone Number",
-  "book.guest.nationality": "Nationality",
-  "book.guest.id_number": "ID / Passport Number",
-  "book.guest.arrival_time": "Expected Arrival Time",
-  "book.guest.requests": "Special Requests",
-  "book.guest.save_profile": "Save info for next time",
-  "book.summary.room": "Room",
-  "book.summary.dates": "Stay Dates",
-  "book.summary.guests": "Guests",
-  "book.summary.rate": "Rate/night",
-  "book.summary.nights": "Nights",
-  "book.summary.subtotal": "Subtotal",
-  "book.summary.discount": "Discount",
-  "book.summary.total": "Total",
-  "book.terms.agree": "I agree to the terms and cancellation policy",
-  "book.confirm_btn": "Confirm Booking",
-  "book.cancel_policy": "Cancellation Policy",
-  "book.pay_at_property": "Pay at the property upon check-in.",
-  "book.no_availability": "Room just became unavailable. Please choose different dates.",
-
-  "confirmation.title": "Booking Confirmed!",
-  "confirmation.code_label": "Confirmation Code",
-  "confirmation.copy": "Copy",
-  "confirmation.copied": "Copied!",
-  "confirmation.qr_instruction": "Use this QR code to check in at the kiosk",
-  "confirmation.add_calendar": "Add to Google Calendar",
-  "confirmation.print": "Print This Page",
-  "confirmation.manage": "Manage Booking",
-  "confirmation.details": "Booking Details",
-  "confirmation.email_sent": "Confirmation email sent to",
-
-  "auth.login.title": "Log In",
-  "auth.login.email": "Email",
-  "auth.login.password": "Password",
-  "auth.login.remember": "Remember me (30 days)",
-  "auth.login.forgot": "Forgot password?",
-  "auth.login.btn": "Log In",
-  "auth.login.no_account": "Don't have an account?",
-  "auth.login.register_link": "Register",
-
-  "auth.register.title": "Create Account",
-  "auth.register.first_name": "First Name *",
-  "auth.register.last_name": "Last Name *",
-  "auth.register.email": "Email *",
-  "auth.register.phone": "Phone Number",
-  "auth.register.password": "Password *",
-  "auth.register.btn": "Create Account",
-  "auth.register.have_account": "Already have an account?",
-  "auth.register.login_link": "Log In",
-
-  "auth.forgot.title": "Forgot Password",
-  "auth.forgot.instruction": "Enter your email and we'll send you a password reset link.",
-  "auth.forgot.email": "Email *",
-  "auth.forgot.btn": "Send Reset Link",
-  "auth.forgot.sent": "If the email exists, we've sent a password reset link.",
-
-  "auth.reset.title": "Reset Password",
-  "auth.reset.password": "New Password *",
-  "auth.reset.btn": "Reset Password",
-  "auth.reset.success": "Password reset successful. Please log in.",
-
-  "bookings.title": "My Bookings",
-  "bookings.tab.upcoming": "Upcoming",
-  "bookings.tab.past": "Past",
-  "bookings.tab.cancelled": "Cancelled",
-  "bookings.empty": "No bookings found.",
-  "bookings.detail.title": "Booking Details",
-  "bookings.cancel_btn": "Cancel Booking",
-  "bookings.cancel.confirm": "Confirm cancellation?",
-  "bookings.cancel.success": "Booking has been cancelled.",
-  "bookings.lookup.title": "Look Up Booking",
-  "bookings.lookup.code": "Booking Code",
-  "bookings.lookup.email": "Email",
-  "bookings.lookup.btn": "Look Up",
-  "bookings.lookup.not_found": "Booking not found.",
-
-  "about.title": "About Us",
-  "amenities.title": "Amenities",
-  "contact.title": "Contact Us",
-  "contact.address": "Address",
-  "contact.phone": "Phone",
-  "contact.email": "Email",
-  "contact.map": "View on Maps",
-  "contact.form.title": "Send a Message",
-  "contact.form.name": "Full Name *",
-  "contact.form.email": "Email *",
-  "contact.form.message": "Message *",
-  "contact.form.btn": "Send",
-  "contact.form.sent": "Message sent!",
-
-  "footer.rights": "All rights reserved.",
-  "footer.privacy": "Privacy Policy",
-  "footer.terms": "Terms of Use"
+  "common": {
+    "search": "Search Rooms",
+    "checkin": "Check-in Date",
+    "checkout": "Check-out Date",
+    "guests": "Guests",
+    "adults": "Adults",
+    "children": "Children",
+    "book_now": "Book Now",
+    "view_details": "View Details",
+    "per_night": "/ night",
+    "total": "Total",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "back": "Back",
+    "next": "Continue",
+    "loading": "Loading...",
+    "error": "An error occurred. Please try again.",
+    "nights": "nights",
+    "from": "From",
+    "select": "Select"
+  },
+  "nav": {
+    "home": "Home",
+    "rooms": "Rooms",
+    "about": "About",
+    "amenities": "Amenities",
+    "contact": "Contact",
+    "my_bookings": "My Bookings",
+    "login": "Log In",
+    "register": "Register",
+    "logout": "Log Out"
+  },
+  "home": {
+    "hero": {
+      "cta": "Explore Rooms"
+    },
+    "search": {
+      "title": "Find Available Rooms",
+      "btn": "Search Rooms"
+    },
+    "featured": {
+      "title": "Featured Rooms",
+      "view_all": "View All Rooms"
+    },
+    "flash": {
+      "title": "Flash Deals",
+      "subtitle": "Limited-time offers — book now and save big!",
+      "code_label": "Use code",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "book_btn": "Book Now"
+    },
+    "why": {
+      "title": "Why Choose Us",
+      "free_cancel": {
+        "title": "Free Cancellation",
+        "desc": "Cancel up to 48 hours before check-in, no fees charged."
+      },
+      "best_price": {
+        "title": "Best Price Guarantee",
+        "desc": "Find a lower price? We'll match it plus give you 5% off."
+      },
+      "heritage": {
+        "title": "UNESCO Heritage Location",
+        "desc": "Steps away from Hoi An Ancient Town — a UNESCO World Heritage Site."
+      },
+      "spa": {
+        "title": "Spa & Wellness",
+        "desc": "In-house spa and outdoor pool for complete relaxation."
+      }
+    }
+  },
+  "rooms": {
+    "title": "All Rooms",
+    "filter": {
+      "price": "Price",
+      "capacity": "Capacity",
+      "bed_type": "Bed Type",
+      "amenities": "Amenities"
+    },
+    "sort": {
+      "price_asc": "Price: Low to High",
+      "price_desc": "Price: High to Low",
+      "area": "Area"
+    },
+    "unavailable": "Unavailable",
+    "area": "m²",
+    "select": "Select This Room",
+    "no_results": "No rooms found.",
+    "back_to_list": "Back to List",
+    "amenities": "Room Amenities",
+    "policies": "Policies",
+    "book_this": "Book This Room"
+  },
+  "book": {
+    "title": "Book a Room",
+    "step1": "Confirm Selection",
+    "step2": "Guest Info",
+    "step3": "Review",
+    "step4": "Confirm",
+    "promo": {
+      "label": "Promo Code",
+      "placeholder": "Enter code...",
+      "apply": "Apply",
+      "valid": "Code applied! Discount:",
+      "invalid": "Invalid or expired promo code."
+    },
+    "guest": {
+      "first_name": "First Name *",
+      "last_name": "Last Name *",
+      "email": "Email *",
+      "phone": "Phone Number",
+      "nationality": "Nationality",
+      "id_number": "ID / Passport Number",
+      "arrival_time": "Expected Arrival Time",
+      "requests": "Special Requests",
+      "save_profile": "Save info for next time"
+    },
+    "summary": {
+      "room": "Room",
+      "dates": "Stay Dates",
+      "guests": "Guests",
+      "rate": "Rate/night",
+      "nights": "Nights",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "total": "Total"
+    },
+    "terms": {
+      "agree": "I agree to the terms and cancellation policy"
+    },
+    "confirm_btn": "Confirm Booking",
+    "cancel_policy": "Cancellation Policy",
+    "pay_at_property": "Pay at the property upon check-in.",
+    "no_availability": "Room just became unavailable. Please choose different dates."
+  },
+  "confirmation": {
+    "title": "Booking Confirmed!",
+    "code_label": "Confirmation Code",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "qr_instruction": "Use this QR code to check in at the kiosk",
+    "add_calendar": "Add to Google Calendar",
+    "print": "Print This Page",
+    "manage": "Manage Booking",
+    "details": "Booking Details",
+    "email_sent": "Confirmation email sent to"
+  },
+  "auth": {
+    "login": {
+      "title": "Log In",
+      "email": "Email",
+      "password": "Password",
+      "remember": "Remember me (30 days)",
+      "forgot": "Forgot password?",
+      "btn": "Log In",
+      "no_account": "Don't have an account?",
+      "register_link": "Register"
+    },
+    "register": {
+      "title": "Create Account",
+      "first_name": "First Name *",
+      "last_name": "Last Name *",
+      "email": "Email *",
+      "phone": "Phone Number",
+      "password": "Password *",
+      "btn": "Create Account",
+      "have_account": "Already have an account?",
+      "login_link": "Log In"
+    },
+    "forgot": {
+      "title": "Forgot Password",
+      "instruction": "Enter your email and we'll send you a password reset link.",
+      "email": "Email *",
+      "btn": "Send Reset Link",
+      "sent": "If the email exists, we've sent a password reset link."
+    },
+    "reset": {
+      "title": "Reset Password",
+      "password": "New Password *",
+      "btn": "Reset Password",
+      "success": "Password reset successful. Please log in."
+    }
+  },
+  "bookings": {
+    "title": "My Bookings",
+    "tab": {
+      "upcoming": "Upcoming",
+      "past": "Past",
+      "cancelled": "Cancelled"
+    },
+    "empty": "No bookings found.",
+    "detail": {
+      "title": "Booking Details"
+    },
+    "cancel_btn": "Cancel Booking",
+    "cancel": {
+      "confirm": "Confirm cancellation?",
+      "success": "Booking has been cancelled."
+    },
+    "lookup": {
+      "title": "Look Up Booking",
+      "code": "Booking Code",
+      "email": "Email",
+      "btn": "Look Up",
+      "not_found": "Booking not found."
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "story_title": "Our Story",
+    "story": "Nestled in the heart of Hoi An Ancient Town — a UNESCO World Heritage Site — Lac Hong Boutique Hotel & Spa was founded in 2012 with a single vision: to create a sanctuary where Vietnamese heritage and modern luxury coexist in harmony.\n\nOver more than a decade of welcoming guests from around the world, we have grown from a charming 8-room guesthouse into a full-service boutique hotel, while maintaining the warmth and personal touch that defines us. Every corner of the hotel tells a story: handcrafted lacquerware, hand-embroidered silk panels, and reclaimed Hoi An timber — all sourced from local artisans.\n\nToday, Lac Hong is proud to be a beloved destination for thousands of travelers each year, offering not just a place to sleep, but an experience that connects you to the soul of Hoi An.",
+    "awards_title": "Recognition & Awards",
+    "awards": [
+      "TripAdvisor Travellers' Choice 2022, 2023, 2024",
+      "Booking.com Guest Review Award — Score 9.2+",
+      "Top 10 Boutique Hotels in Central Vietnam — Travel+Leisure 2023",
+      "Green Hotel Certification — Ministry of Tourism Vietnam"
+    ],
+    "policies_title": "Hotel Policies",
+    "policies": {
+      "checkin": {
+        "label": "Check-in",
+        "value": "From 14:00 (2:00 PM). Early check-in subject to availability."
+      },
+      "checkout": {
+        "label": "Check-out",
+        "value": "Before 12:00 (noon). Late check-out available upon request."
+      },
+      "cancel": {
+        "label": "Cancellation",
+        "value": "Free cancellation up to 48 hours before check-in. Non-refundable bookings cannot be cancelled."
+      },
+      "children": {
+        "label": "Children",
+        "value": "Children under 12 stay free when using existing bedding. Extra beds available for a fee."
+      },
+      "pets": {
+        "label": "Pets",
+        "value": "Pets are not permitted on the premises."
+      },
+      "smoking": {
+        "label": "Smoking",
+        "value": "100% smoke-free property. Designated smoking area available near the main entrance."
+      },
+      "payment": {
+        "label": "Payment",
+        "value": "We accept cash (VND), Visa, Mastercard, and domestic ATM cards. Payment is made at check-in."
+      }
+    },
+    "location_title": "Location",
+    "location_desc": "We are located at 48 Tran Hung Dao Street, Minh An Ward — just a 5-minute walk from the iconic Japanese Covered Bridge and the vibrant Night Market. The ancient town's major attractions, restaurants, and tailor shops are all within easy walking distance.",
+    "team_title": "Our Team",
+    "team_desc": "Our dedicated team of 45 hospitality professionals is at your service 24/7. From our concierge team who know every hidden gem in Hoi An, to our spa therapists trained in traditional Vietnamese massage techniques, we are committed to making your stay exceptional."
+  },
+  "amenities": {
+    "title": "Hotel Amenities",
+    "subtitle": "Everything you need for a perfect stay",
+    "property_amenities": "Property Amenities",
+    "room_amenities": "In-Room Amenities"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "hours": "Reception Hours",
+    "hours_value": "Open 24/7",
+    "map": "View on Maps",
+    "social": "Follow Us",
+    "form": {
+      "title": "Send a Message",
+      "name": "Full Name *",
+      "email": "Email *",
+      "subject": "Subject",
+      "message": "Message *",
+      "btn": "Send Message",
+      "sent": "Your message has been sent! We'll reply within 24 hours.",
+      "subjects": {
+        "reservation": "Reservation Inquiry",
+        "group": "Group Booking",
+        "event": "Event & Meeting",
+        "feedback": "Feedback",
+        "other": "Other"
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Where tradition meets modern luxury",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "quick_links": "Quick Links",
+    "follow": "Follow Us"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "updated": "Last updated: January 1, 2026",
+    "intro": "Lac Hong Boutique Hotel & Spa (\"we\", \"the Hotel\") is committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our website and online booking service.",
+    "sections": [
+      {
+        "title": "1. Information We Collect",
+        "content": "We collect the following information when you make a booking or contact us:\n• Identity information: Full name, date of birth, ID/Passport number, nationality\n• Contact information: Email address, phone number\n• Booking information: Check-in/check-out dates, room type, special requests\n• Payment information: Card type, last 4 digits (we do not store full card numbers)\n• Technical data: IP address, browser type, session cookies"
+      },
+      {
+        "title": "2. How We Use Your Information",
+        "content": "We use your information to:\n• Process and manage your reservations\n• Send booking confirmation emails and stay-related information\n• Provide customer support services\n• Improve service quality through anonymized data analysis\n• Comply with legal requirements for guest registration\n• Send promotional communications (only with your consent)"
+      },
+      {
+        "title": "3. Data Security",
+        "content": "We implement appropriate technical and organizational security measures to protect your personal information, including:\n• SSL/TLS encryption for all connections\n• AES-256 encryption for sensitive data (ID/Passport numbers)\n• Strict access controls for staff handling data\n• 24/7 firewall and security monitoring systems"
+      },
+      {
+        "title": "4. Information Sharing",
+        "content": "We do not sell, trade, or rent your personal information to third parties, except:\n• Government authorities when legally required (law enforcement, tax authorities)\n• Payment partners for transaction processing (PCI-DSS compliant)\n• Email service providers for booking notifications"
+      },
+      {
+        "title": "5. Cookies",
+        "content": "Our website uses cookies to enhance your browsing experience. Session cookies are deleted when you close your browser. Login-remember cookies are valid for 30 days. You may disable cookies in your browser settings; however, some features may not function correctly as a result."
+      },
+      {
+        "title": "6. Your Rights",
+        "content": "You have the right to:\n• Access and view the personal information we hold about you\n• Request corrections to inaccurate information\n• Request deletion of your account and personal data\n• Withdraw consent for marketing emails at any time\n\nTo exercise these rights, please contact: info@lachonghotel.vn"
+      },
+      {
+        "title": "7. Data Retention",
+        "content": "We retain booking and guest information for 5 years from the date of the last stay, in accordance with hotel record-keeping regulations. Inactive accounts (no activity for 3 years) will be notified and deleted after 30 days."
+      },
+      {
+        "title": "8. Policy Changes",
+        "content": "We may update this Privacy Policy from time to time. Significant changes will be communicated via email or a prominent notice on our website at least 7 days before they take effect."
+      },
+      {
+        "title": "9. Contact Us",
+        "content": "If you have questions about this Privacy Policy, please contact:\n\nLac Hong Boutique Hotel & Spa\n48 Tran Hung Dao, Minh An Ward, Hoi An, Quang Nam, Vietnam\nEmail: info@lachonghotel.vn\nPhone: +84 235 391 8888"
+      }
+    ]
+  },
+  "terms": {
+    "title": "Terms of Use",
+    "updated": "Last updated: January 1, 2026",
+    "intro": "By accessing and using the online booking website of Lac Hong Boutique Hotel & Spa, you agree to be bound by the following terms and conditions. Please read carefully before proceeding with a reservation.",
+    "sections": [
+      {
+        "title": "1. Booking Policy",
+        "content": "1.1. All online reservations require accurate guest information. The Hotel reserves the right to cancel bookings if false information is provided.\n\n1.2. A booking confirmation will be sent by email within 15 minutes of completion. The confirmation code (HTL-XXXX-XXXXXX) serves as proof of a valid reservation.\n\n1.3. Each booking has a unique confirmation code. Please retain this code for check-in."
+      },
+      {
+        "title": "2. Cancellation & Refund Policy",
+        "content": "2.1. Flexible Rate: Free cancellation up to 48 hours before 14:00 on the check-in date. Late cancellations will incur a fee equal to the first night's rate.\n\n2.2. Non-Refundable Rate: No refund applies under any circumstances.\n\n2.3. Refunds (where applicable) will be processed within 5–10 business days to the original payment method.\n\n2.4. Force majeure (natural disasters, officially declared epidemics): The Hotel will consider refunds or date changes on a case-by-case basis."
+      },
+      {
+        "title": "3. Check-in & Check-out Policy",
+        "content": "3.1. Check-in: From 14:00. Early check-in subject to room availability (additional charges may apply).\n\n3.2. Check-out: Before 12:00 noon. Late check-out after 18:00 incurs a fee of 50% of the daily room rate.\n\n3.3. Guests must present a valid ID/Passport at check-in.\n\n3.4. A credit card or cash deposit equivalent to one night's rate will be collected at check-in and refunded upon check-out if no damage has occurred."
+      },
+      {
+        "title": "4. House Rules",
+        "content": "4.1. The entire property is strictly non-smoking. Violations are subject to a fine of VND 1,000,000.\n\n4.2. Pets are not permitted anywhere on the property.\n\n4.3. Quiet hours: 22:00 – 07:00. Please be considerate of other guests.\n\n4.4. Guests may not bring external visitors to their rooms after 22:00 without registering at reception.\n\n4.5. The Hotel reserves the right to refuse service or request a guest to leave in cases of serious rule violations."
+      },
+      {
+        "title": "5. Guest Responsibilities",
+        "content": "5.1. Guests are responsible for any damage to Hotel property during their stay.\n\n5.2. The Hotel is not liable for loss or damage to guests' personal belongings, unless directly caused by Hotel staff negligence.\n\n5.3. In-room safes are provided free of charge — guests are encouraged to secure valuables."
+      },
+      {
+        "title": "6. Room Rates & Taxes",
+        "content": "6.1. All rates displayed on the website are inclusive of 10% VAT as required by law.\n\n6.2. Any applicable service charges will be clearly disclosed before booking confirmation.\n\n6.3. The Hotel reserves the right to adjust future rates without prior notice, but confirmed booking rates will be honored."
+      },
+      {
+        "title": "7. Promo Codes",
+        "content": "7.1. Each promo code may only be used once and cannot be combined with other offers.\n\n7.2. Promo codes have individual expiry dates and conditions. The Hotel reserves the right to void codes in cases of abuse.\n\n7.3. Promotional value cannot be exchanged for cash."
+      },
+      {
+        "title": "8. Limitation of Liability",
+        "content": "8.1. The Hotel strives to maintain uninterrupted website service but does not guarantee the absence of technical issues.\n\n8.2. In the event of a technical issue affecting a booking, the Hotel will contact the guest directly by email or phone to resolve the matter.\n\n8.3. The Hotel's maximum liability in all cases shall not exceed the value of the confirmed booking payment."
+      },
+      {
+        "title": "9. Governing Law",
+        "content": "These Terms are governed by the laws of the Socialist Republic of Vietnam. Any disputes shall be resolved at the competent People's Court in Quang Nam Province, Vietnam."
+      },
+      {
+        "title": "10. Contact",
+        "content": "Lac Hong Boutique Hotel & Spa\n48 Tran Hung Dao, Minh An Ward, Hoi An, Quang Nam, Vietnam\nEmail: info@lachonghotel.vn | Phone: +84 235 391 8888\nReception: Open 24/7"
+      }
+    ]
+  }
 }

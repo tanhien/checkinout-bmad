@@ -1,7 +1,5 @@
 "use server"
 
-import bcrypt from "bcryptjs"
-import crypto from "crypto"
 import { revalidatePath } from "next/cache"
 import { getServerCaller } from "@/lib/trpc-caller"
 
@@ -11,20 +9,16 @@ export async function createStaffAction(formData: FormData) {
   const caller = await getServerCaller()
   if (!caller) return { error: "Chưa đăng nhập" }
 
-  // Generate a secure random temporary password
-  const tempPassword = crypto.randomBytes(8).toString("hex")
-  const passwordHash = await bcrypt.hash(tempPassword, 12)
-
   try {
     const staff = await caller.staff.create({
       firstName: formData.get("firstName") as string,
       lastName: formData.get("lastName") as string,
       email: formData.get("email") as string,
       role: formData.get("role") as StaffRole,
-      passwordHash,
+      // No password supplied — system generates onboarding token and sends welcome email
     })
     revalidatePath("/settings/staff")
-    return { success: true, staffId: staff.id, tempPassword }
+    return { success: true, staffId: staff.id, emailSent: true }
   } catch (e) {
     return { error: e instanceof Error ? e.message : "Lỗi không xác định" }
   }

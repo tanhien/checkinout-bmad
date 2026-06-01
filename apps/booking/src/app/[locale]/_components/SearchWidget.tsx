@@ -7,11 +7,9 @@ import { useTranslations } from "next-intl"
 export function SearchWidget({ locale }: { locale: string }) {
   const t = useTranslations()
   const router = useRouter()
-  const today = new Date().toISOString().slice(0, 10)
-  const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10)
-
-  const [checkin, setCheckin] = useState(today)
-  const [checkout, setCheckout] = useState(tomorrow)
+  const todayStr = new Date().toISOString().slice(0, 10)
+  const [checkin, setCheckin] = useState(() => todayStr)
+  const [checkout, setCheckout] = useState(() => new Date(Date.now() + 86400000).toISOString().slice(0, 10))
   const [adults, setAdults] = useState(2)
   const [children, setChildren] = useState(0)
 
@@ -28,7 +26,7 @@ export function SearchWidget({ locale }: { locale: string }) {
         <input
           type="date"
           value={checkin}
-          min={today}
+          min={todayStr}
           onChange={(e) => setCheckin(e.target.value)}
           className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
@@ -39,7 +37,7 @@ export function SearchWidget({ locale }: { locale: string }) {
         <input
           type="date"
           value={checkout}
-          min={checkin || today}
+          min={checkin || todayStr}
           onChange={(e) => setCheckout(e.target.value)}
           className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           required

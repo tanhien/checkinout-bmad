@@ -20,6 +20,7 @@ export default async function RoomTypesSettingsPage() {
     basePrice: Number(rt.basePrice),
     isActive: rt.isActive,
     isFeatured: rt.isFeatured,
+    photoUrls: rt.photoUrls,
     _count: rt._count,
   }))
 

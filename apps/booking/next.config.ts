@@ -5,8 +5,13 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts")
 
 const nextConfig: NextConfig = {
   transpilePackages: ["@hotel/ui", "@hotel/types"],
-  experimental: {
-    typedRoutes: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
   },
 }
 

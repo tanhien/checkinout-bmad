@@ -39,6 +39,8 @@ export function CallForHelpAlert({ propertyId }: { propertyId: string }) {
   const [alerts, setAlerts] = useState<Alert[]>([])
   const [audioEnabled, setAudioEnabled] = useState(false)
   const socketRef = useRef<ReturnType<typeof createStaffSocket> | null>(null)
+  const audioEnabledRef = useRef(audioEnabled)
+  audioEnabledRef.current = audioEnabled
 
   useEffect(() => {
     const socket = createStaffSocket()
@@ -47,18 +49,23 @@ export function CallForHelpAlert({ propertyId }: { propertyId: string }) {
     socket.on("alert:callForHelp", (evt: CallForHelpEvent) => {
       if (evt.propertyId !== propertyId) return
       setAlerts((prev) => [...prev, { ...evt, receivedAt: new Date() }])
-      if (audioEnabled) playAlertSound()
+      if (audioEnabledRef.current) playAlertSound()
+    })
+
+    // E6-S3: Listen for dismiss broadcast from any staff screen
+    socket.on("alert:dismissed", ({ alertId }: { alertId: string }) => {
+      setAlerts((prev) => prev.filter((a) => a.alertId !== alertId))
     })
 
     return () => { socket.disconnect() }
-  }, [propertyId, audioEnabled])
+  }, [propertyId])
 
   function dismiss(alertId: string) {
-    setAlerts((prev) => prev.filter((a) => a.alertId !== alertId))
+    // Emit to server which broadcasts to all staff in the property room
+    socketRef.current?.emit("alert:dismiss", { alertId })
   }
 
   function enableAudio() {
-    // Create a short silent AudioContext to unlock audio autoplay in the browser
     try {
       const ctx = new AudioContext()
       const osc = ctx.createOscillator()
@@ -90,7 +97,7 @@ export function CallForHelpAlert({ propertyId }: { propertyId: string }) {
       {alerts.map((alert) => (
         <div
           key={alert.alertId}
-          className="mb-4 flex items-start justify-between gap-4 rounded-xl bg-orange-50 px-5 py-4 ring-2 ring-orange-400 shadow-lg animate-in slide-in-from-top-2"
+          className="mb-4 flex items-start justify-between gap-4 rounded-xl bg-orange-50 px-5 py-4 ring-2 ring-orange-400 shadow-lg"
         >
           <div className="flex items-start gap-3">
             <span className="mt-0.5 text-2xl">🚨</span>

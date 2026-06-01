@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { createStaffSocket } from "@/lib/socket"
 import type { RoomStatusChangedEvent } from "@hotel/types"
 

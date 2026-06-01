@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { verifyStaffToken, COOKIE_NAME } from "@/lib/auth"
 
 // Paths that do NOT require authentication
-const PUBLIC_PATHS = ["/login", "/api/auth/login", "/api/auth/logout"]
+// /api/trpc is public because tRPC procedures enforce their own auth (staffProcedure, kioskProcedure, etc.)
+const PUBLIC_PATHS = ["/login", "/api/auth/login", "/api/auth/logout", "/api/trpc"]
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl

@@ -26,10 +26,34 @@ export async function updatePropertyAction(formData: FormData) {
       walkinMaxDays: formData.get("walkinMaxDays") ? Number(formData.get("walkinMaxDays")) : undefined,
       maxAdvanceDays: formData.get("maxAdvanceDays") ? Number(formData.get("maxAdvanceDays")) : undefined,
       minStayNights: formData.get("minStayNights") ? Number(formData.get("minStayNights")) : undefined,
+      taxCode: (formData.get("taxCode") as string) || undefined,
+      bankAccount: (formData.get("bankAccount") as string) || undefined,
     })
     revalidatePath("/settings/property")
     return { success: true }
   } catch (e) {
     return { error: e instanceof Error ? e.message : "Lỗi không xác định" }
+  }
+}
+
+export async function updateEmailTemplateAction(template: string | null) {
+  const caller = await getServerCaller()
+  if (!caller) return { error: "Chưa đăng nhập" }
+  try {
+    await caller.property.update({ emailTemplate: template })
+    revalidatePath("/settings/property")
+    return { success: true }
+  } catch (e) {
+    return { error: e instanceof Error ? e.message : "Lỗi không xác định" }
+  }
+}
+
+export async function previewEmailTemplateAction(template: string) {
+  const caller = await getServerCaller()
+  if (!caller) return { error: "Chưa đăng nhập" } as { error: string; html?: string }
+  try {
+    return await caller.property.previewEmailTemplate({ template })
+  } catch (e) {
+    return { error: e instanceof Error ? e.message : "Template error" } as { error: string; html?: string }
   }
 }

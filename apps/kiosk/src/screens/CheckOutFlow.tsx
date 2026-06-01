@@ -57,8 +57,6 @@ function LookupScreen({
   const [confCode, setConfCode] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [showIssueMsg, setShowIssueMsg] = useState(false)
-
   async function handleSearch() {
     setError(null)
     setLoading(true)
@@ -161,12 +159,6 @@ function LookupScreen({
             </KioskButton>
           </div>
 
-          {/* Issue / dispute help */}
-          {showIssueMsg && (
-            <div className="mt-4 rounded-xl bg-amber-500/20 px-4 py-3 text-sm text-amber-100">
-              {t("checkout.step2.issue_msg")}
-            </div>
-          )}
         </div>
       </div>
     </div>
@@ -196,17 +188,17 @@ function FolioScreen({
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex h-screen flex-col">
       <ScreenHeader titleKey="checkout.title" onBack={onBack} step={2} totalSteps={5} />
 
-      <div className="flex flex-1 flex-col px-6">
+      <div className="flex flex-1 min-h-0 flex-col px-6">
         <h2 className="mb-2 text-center text-3xl font-bold text-white">{t("checkout.step2.title")}</h2>
         <p className="mb-4 text-center text-base text-blue-200">
           {booking.guestName} · {booking.roomNumbers.join(", ")} · {booking.checkInDate} → {booking.checkOutDate}
         </p>
 
         {/* Scrollable folio items */}
-        <div className="mb-4 flex-1 overflow-y-auto rounded-2xl bg-white shadow-xl">
+        <div className="mb-4 flex-1 min-h-0 overflow-y-auto rounded-2xl bg-white shadow-xl">
           <div className="px-5 py-3 border-b border-gray-100">
             <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">{t("checkout.step2.charges")}</p>
           </div>

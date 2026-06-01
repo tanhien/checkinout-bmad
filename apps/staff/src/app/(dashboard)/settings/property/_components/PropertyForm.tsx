@@ -22,6 +22,9 @@ type Property = {
   walkinMaxDays: number
   maxAdvanceDays: number
   minStayNights: number
+  taxCode: string | null
+  bankAccount: string | null
+  emailTemplate: string | null
 }
 
 export function PropertyForm({ property }: { property: Property }) {
@@ -92,6 +95,14 @@ export function PropertyForm({ property }: { property: Property }) {
         <NumberField label="Walk-in tối đa (ngày)" name="walkinMaxDays" defaultValue={property.walkinMaxDays} min={0} />
         <NumberField label="Đặt trước tối đa (ngày)" name="maxAdvanceDays" defaultValue={property.maxAdvanceDays} min={1} />
         <NumberField label="Ở tối thiểu (đêm)" name="minStayNights" defaultValue={property.minStayNights} min={1} />
+      </div>
+
+      <div className="border-t border-gray-200 pt-4">
+        <p className="text-xs font-semibold text-gray-700 mb-3">Thông tin hóa đơn</p>
+        <div className="grid grid-cols-2 gap-4">
+          <Field label="Mã số thuế (VAT)" name="taxCode" defaultValue={property.taxCode ?? ""} placeholder="VD: 0123456789" />
+          <Field label="Số tài khoản ngân hàng" name="bankAccount" defaultValue={property.bankAccount ?? ""} placeholder="VD: Vietcombank - 1234567890" />
+        </div>
       </div>
 
       <div className="flex items-center gap-3">

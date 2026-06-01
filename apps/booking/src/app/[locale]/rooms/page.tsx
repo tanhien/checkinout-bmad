@@ -39,7 +39,7 @@ export default async function RoomsPage({ params, searchParams }: Props) {
         checkin={checkin}
         checkout={checkout}
         adults={adults}
-        children={children}
+        childCount={children}
         initialSort={sp.sort ?? "price_asc"}
       />
     </div>

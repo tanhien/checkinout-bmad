@@ -32,3 +32,10 @@ coverage
 *.log
 npm-debug.log*
 pnpm-debug.log*
+
+# Compiled server
+apps/staff/server.compiled.js
+
+# Proprietary fonts (Arial — Monotype license, must be added manually on each server)
+apps/staff/public/fonts/Arial-Regular.ttf
+apps/staff/public/fonts/ArialBold.ttf

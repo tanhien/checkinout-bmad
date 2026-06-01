@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { getPortalCaller } from "@/lib/portal-caller"
 import { RoomDetailClient } from "./_RoomDetailClient"
+import { RoomBookingWidget } from "./_RoomBookingWidget"
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>
@@ -32,17 +33,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const BED_LABELS: Record<string, string> = {
-  SINGLE: "1 giường đơn",
-  DOUBLE: "1 giường đôi",
-  TWIN: "2 giường đơn",
-  KING: "1 giường King",
-  QUEEN: "1 giường Queen",
-  BUNK: "Giường tầng",
-}
-
-function formatVND(amount: number) {
-  return amount.toLocaleString("vi-VN") + " VNĐ"
+const BED_LABELS: Record<string, { vi: string; en: string }> = {
+  SINGLE: { vi: "1 giường đơn", en: "Single bed" },
+  DOUBLE: { vi: "1 giường đôi", en: "Double bed" },
+  TWIN:   { vi: "2 giường đơn", en: "Twin beds" },
+  KING:   { vi: "1 giường King", en: "King bed" },
+  QUEEN:  { vi: "1 giường Queen", en: "Queen bed" },
+  BUNK:   { vi: "Giường tầng", en: "Bunk beds" },
 }
 
 export default async function RoomDetailPage({ params, searchParams }: Props) {
@@ -51,9 +48,15 @@ export default async function RoomDetailPage({ params, searchParams }: Props) {
   const t = await getTranslations({ locale })
 
   let room = null
+  let currency = "VND"
   try {
     const caller = await getPortalCaller()
-    room = await caller.portal.getRoomType({ slug })
+    const [rt, property] = await Promise.all([
+      caller.portal.getRoomType({ slug }),
+      caller.portal.getProperty(),
+    ])
+    room = rt
+    currency = property.currency
   } catch {
     notFound()
   }
@@ -63,14 +66,11 @@ export default async function RoomDetailPage({ params, searchParams }: Props) {
   const checkout = sp.checkout
   const adults = Number(sp.adults ?? 2)
   const children = Number(sp.children ?? 0)
+  const isVi = locale === "vi"
 
-  const bookParams = new URLSearchParams({ roomTypeId: room.id })
-  if (checkin) bookParams.set("checkin", checkin)
-  if (checkout) bookParams.set("checkout", checkout)
-  bookParams.set("adults", String(adults))
-  bookParams.set("children", String(children))
+  const bedLabel = room.bedType ? (BED_LABELS[room.bedType]?.[isVi ? "vi" : "en"] ?? room.bedType) : null
 
-  // Schema.org HotelRoom markup (E5-S1 AC 7)
+  // Schema.org HotelRoom markup
   const schemaOrg = {
     "@context": "https://schema.org",
     "@type": "HotelRoom",
@@ -90,8 +90,10 @@ export default async function RoomDetailPage({ params, searchParams }: Props) {
       />
 
       {/* Back link */}
-      <a href={`/${locale}/rooms${checkin ? `?checkin=${checkin}&checkout=${checkout}&adults=${adults}&children=${children}` : ""}`}
-        className="text-sm text-blue-700 hover:underline mb-6 inline-block">
+      <a
+        href={`/${locale}/rooms${checkin ? `?checkin=${checkin}&checkout=${checkout}&adults=${adults}&children=${children}` : ""}`}
+        className="text-sm text-amber-700 hover:underline mb-6 inline-block"
+      >
         ← {t("rooms.back_to_list")}
       </a>
 
@@ -104,25 +106,32 @@ export default async function RoomDetailPage({ params, searchParams }: Props) {
           {/* Info */}
           <div className="mt-6">
             <h1 className="text-2xl font-bold text-gray-900 mb-2">{room.name}</h1>
-            <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-gray-500 mb-4">
-              {room.areaM2 && <span>{room.areaM2} {t("rooms.area")}</span>}
-              <span>{BED_LABELS[room.bedType] ?? room.bedType}</span>
-              <span>Tối đa {room.maxAdults} người lớn</span>
+            <div className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-gray-500 mb-4">
+              {room.areaM2 && <span>📐 {room.areaM2} {t("rooms.area")}</span>}
+              {bedLabel && <span>🛏 {bedLabel}</span>}
+              <span>👤 {isVi ? `Tối đa ${room.maxAdults} người lớn` : `Up to ${room.maxAdults} adults`}</span>
+              {room.maxChildren > 0 && (
+                <span>👶 {isVi ? `${room.maxChildren} trẻ em` : `${room.maxChildren} children`}</span>
+              )}
             </div>
             {room.description && (
               <p className="text-gray-700 leading-relaxed mb-6">{room.description}</p>
             )}
 
             {/* Amenities */}
-            <h2 className="text-base font-semibold text-gray-900 mb-3">{t("rooms.amenities")}</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-8">
-              {room.amenities.map((a) => (
-                <div key={a.id} className="flex items-center gap-2 text-sm text-gray-700">
-                  {a.icon && <span>{a.icon}</span>}
-                  {a.name}
+            {room.amenities.length > 0 && (
+              <>
+                <h2 className="text-base font-semibold text-gray-900 mb-3">{t("rooms.amenities")}</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-8">
+                  {room.amenities.map((a) => (
+                    <div key={a.id} className="flex items-center gap-2 text-sm text-gray-700 rounded-lg bg-gray-50 px-3 py-2">
+                      {a.icon && <span className="text-base">{a.icon}</span>}
+                      <span>{a.name}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </>
+            )}
 
             {/* Rate plans */}
             {room.ratePlans.length > 0 && (
@@ -133,10 +142,14 @@ export default async function RoomDetailPage({ params, searchParams }: Props) {
                     <div key={rp.id} className="rounded-xl bg-white p-4 ring-1 ring-gray-200 text-sm">
                       <p className="font-medium text-gray-900">{rp.name}</p>
                       {rp.isNonRefundable && (
-                        <p className="text-orange-600 mt-1">Không hoàn tiền</p>
+                        <p className="text-orange-600 mt-1 text-xs font-medium">
+                          ⚠️ {isVi ? "Không hoàn tiền" : "Non-refundable"}
+                        </p>
                       )}
                       {rp.discountPercent && (
-                        <p className="text-green-700 mt-1">Giảm {rp.discountPercent}%</p>
+                        <p className="text-green-700 mt-1 text-xs font-medium">
+                          🏷️ {isVi ? `Tiết kiệm ${rp.discountPercent}%` : `Save ${rp.discountPercent}%`}
+                        </p>
                       )}
                     </div>
                   ))}
@@ -146,19 +159,18 @@ export default async function RoomDetailPage({ params, searchParams }: Props) {
           </div>
         </div>
 
-        {/* Right: sticky booking widget */}
+        {/* Right: booking widget with date picker */}
         <div className="lg:col-span-1">
-          <div className="sticky top-20 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-200">
-            <p className="text-xs text-gray-500 mb-1">Từ</p>
-            <p className="text-2xl font-bold text-blue-700 mb-1">{formatVND(room.basePrice)}</p>
-            <p className="text-xs text-gray-500 mb-4">{t("common.per_night")}</p>
-            <a
-              href={`/${locale}/book?${bookParams}`}
-              className="block w-full rounded-xl bg-blue-700 text-center text-sm font-semibold text-white py-3 hover:bg-blue-800 transition-colors"
-            >
-              {t("rooms.book_this")}
-            </a>
-          </div>
+          <RoomBookingWidget
+            locale={locale}
+            roomTypeId={room.id}
+            basePrice={room.basePrice}
+            currency={currency}
+            initialCheckin={checkin}
+            initialCheckout={checkout}
+            initialAdults={adults}
+            initialChildren={children}
+          />
         </div>
       </div>
     </div>

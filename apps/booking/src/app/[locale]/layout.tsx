@@ -65,18 +65,14 @@ export default async function LocaleLayout({ children, params }: Props) {
   } catch { /* fallback */ }
 
   return (
-    <html lang={locale}>
-      <body className="min-h-screen flex flex-col bg-gray-50 text-gray-900 antialiased">
-        <NextIntlClientProvider messages={messages}>
-          <Header
-            propertyName={property.name}
-            logoUrl={property.logoUrl}
-            guestFirstName={guestFirstName}
-          />
-          <main className="flex-1">{children}</main>
-          <Footer propertyName={property.name} />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages}>
+      <Header
+        propertyName={property.name}
+        logoUrl={property.logoUrl}
+        guestFirstName={guestFirstName}
+      />
+      <main className="flex-1">{children}</main>
+      <Footer propertyName={property.name} />
+    </NextIntlClientProvider>
   )
 }
