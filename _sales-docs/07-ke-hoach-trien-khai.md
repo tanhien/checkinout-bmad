@@ -211,4 +211,4 @@ Tuần 4: Go-live
 
 **Project Manager của bạn:** Liên hệ trực tiếp trong suốt quá trình triển khai.
 
-> **Email:** hien.nguyen2@globee.hk
+> **Email:** [email@khachsan.vn]

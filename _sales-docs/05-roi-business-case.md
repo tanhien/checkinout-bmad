@@ -145,4 +145,4 @@ Chi phí ẩn từ quản lý thủ công:
 | Số nhân viên lễ tân hiện tại | ___ |
 | Lương bình quân nhân viên lễ tân (VNĐ) | ___ |
 
-> Gửi thông tin về **hien.nguyen2@globee.hk** — nhận bảng ROI chi tiết trong 24 giờ.
+> Gửi thông tin về **[email@khachsan.vn]** — nhận bảng ROI chi tiết trong 24 giờ.

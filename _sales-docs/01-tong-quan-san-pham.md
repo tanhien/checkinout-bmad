@@ -102,5 +102,5 @@ Trang đặt phòng trực tuyến chuyên nghiệp, tích hợp sẵn vào webs
 
 ## Liên hệ tư vấn
 
-> **Email:** hien.nguyen2@globee.hk  
+> **Email:** [email@khachsan.vn]  
 > Chúng tôi cung cấp **demo trực tiếp miễn phí** — xem hệ thống chạy với dữ liệu thực của khách sạn bạn.

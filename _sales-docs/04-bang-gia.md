@@ -104,7 +104,7 @@
 
 ## Liên Hệ Báo Giá
 
-> **Email:** hien.nguyen2@globee.hk  
+> **Email:** [email@khachsan.vn]  
 > Cung cấp thông tin sau để nhận báo giá chính xác nhất:
 > - Số phòng
 > - Loại hình khách sạn (hotel, hostel, resort, serviced apartment)
