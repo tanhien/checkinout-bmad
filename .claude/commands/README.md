@@ -13,6 +13,7 @@ Invoke via `/project:{skill-name}` in Claude Code.
 | `/project:bmad-stories [epic-id]` | 3 — Solutioning | Generate full epics & stories breakdown |
 | `/project:bmad-implement [story-id]` | 4 — Implementation | Implement a specific story (e.g., E1-S3) |
 | `/project:bmad-review [story-id]` | 4 — Implementation | Review implementation against story ACs |
+| `/project:bmad-test [scope]` | 4 — Implementation | Generate risk-based TESTPLAN.md (scope: all\|auth\|api\|ui\|security\|<subsystem>) |
 
 ## Meta Skills
 
