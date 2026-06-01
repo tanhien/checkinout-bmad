@@ -1,0 +1,19 @@
+{
+  "name": "@hotel/e2e",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:auth": "playwright test tests/auth.spec.ts",
+    "test:booking": "playwright test tests/booking.spec.ts",
+    "test:kiosk": "playwright test tests/kiosk.spec.ts",
+    "test:staff": "playwright test tests/staff.spec.ts",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.0.0"
+  }
+}

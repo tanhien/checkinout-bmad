@@ -1226,6 +1226,33 @@ Trước khi deploy production, tất cả P0 tests phải PASS:
 
 ---
 
+## Kết quả Automation (2026-06)
+
+### Unit Tests — `pnpm --filter @hotel/api test`
+| File | Tests | Kết quả |
+|---|---|---|
+| `pricing.test.ts` | 16 | ✅ PASS |
+| `normalize.test.ts` | 16 | ✅ PASS |
+| `crypto.test.ts` | 16 | ✅ PASS |
+| `storage.test.ts` | 10 | ✅ PASS |
+| `folio.test.ts` *(mới)* | 32 | ✅ PASS |
+| **Tổng** | **90/90** | **✅ ALL PASS** |
+
+### E2E Tests — Playwright (`apps/e2e/`)
+```bash
+docker compose up -d
+pnpm dev                              # staff:3001, portal:3000, kiosk:3002
+pnpm --filter @hotel/db db:seed:test  # tạo test data
+pnpm --filter @hotel/e2e test         # toàn bộ suite
+pnpm --filter @hotel/e2e test:auth    # TC-AUTH-01..08
+pnpm --filter @hotel/e2e test:booking # TC-BOOK-01..10
+pnpm --filter @hotel/e2e test:kiosk   # TC-KIOSK-01..09
+pnpm --filter @hotel/e2e test:staff   # TC-STAFF + FOLIO + ROOM + HK + SEC
+```
+> **⚠️ TC-AUTH-07** (brute-force) chạy riêng — lock IP 15 phút: `playwright test --grep TC-AUTH-07`
+
+---
+
 ## Checklist Coverage (v1.1)
 
 | Hạng mục | Trạng thái |

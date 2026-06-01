@@ -11,6 +11,7 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
     "db:reset": "prisma migrate reset --force",
+    "db:seed:test": "tsx prisma/seed.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
