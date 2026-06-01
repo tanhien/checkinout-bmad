@@ -1,99 +1,129 @@
 import { redirect } from "next/navigation"
 import { getStaffSession } from "@/lib/auth"
 import { getServerCaller } from "@/lib/trpc-caller"
-import { DateRangeControls } from "../_components/DateRangeControls"
-import { ChannelChart } from "./_components/ChannelChart"
+import { DateRangePicker } from "../_components/DateRangePicker"
+import { ChannelChart } from "../_components/ChannelChart"
 
 const CHANNEL_LABEL: Record<string, string> = {
-  DIRECT: "Trực tiếp", PHONE: "Điện thoại", WALK_IN: "Walk-in",
-  OTA: "OTA", KIOSK: "Kiosk",
+  DIRECT: "Trực tiếp",
+  KIOSK: "Kiosk",
+  PHONE: "Điện thoại",
+  WALK_IN: "Walk-in",
+  OTA: "OTA",
+  ONLINE: "Online",
 }
 
-export default async function ChannelsPage({
+function fmtVND(n: number): string {
+  return new Intl.NumberFormat("vi-VN").format(Math.round(n)) + " ₫"
+}
+
+function defaultDates() {
+  const today = new Date()
+  const to = today.toISOString().slice(0, 10)
+  const from = new Date(today.getTime() - 29 * 86_400_000).toISOString().slice(0, 10)
+  return { from, to }
+}
+
+export default async function ChannelsReportPage({
   searchParams,
 }: {
   searchParams: Promise<Record<string, string | string[]>>
 }) {
   const session = await getStaffSession()
   if (!session) redirect("/login")
+  if (!["ADMIN", "MANAGER", "ACCOUNTANT"].includes(session.role)) redirect("/unauthorized")
 
   const sp = await searchParams
-  const today = new Date().toISOString().slice(0, 10)
-  const from = typeof sp.from === "string" ? sp.from : new Date(Date.now() - 29 * 86_400_000).toISOString().slice(0, 10)
-  const to   = typeof sp.to   === "string" ? sp.to   : today
+  const get = (k: string): string =>
+    (Array.isArray(sp[k]) ? (sp[k] as string[])[0] : (sp[k] as string | undefined)) ?? ""
+
+  const defaults = defaultDates()
+  const from = get("from") || defaults.from
+  const to = get("to") || defaults.to
 
   const caller = await getServerCaller()
   if (!caller) redirect("/login")
 
-  const rows = await caller.report.getChannels({ from, to })
-  const totalCount   = rows.reduce((s, r) => s + r.count, 0)
-  const totalRevenue = rows.reduce((s, r) => s + r.revenue, 0)
+  const data = await caller.report.getChannels({ from, to })
+  const totalBookings = data.reduce((s, d) => s + d.count, 0)
+  const totalRevenue = data.reduce((s, d) => s + d.revenue, 0)
 
   return (
     <div className="p-6 space-y-5">
-      <div className="flex items-center justify-between flex-wrap gap-3">
-        <div>
-          <h2 className="text-base font-semibold text-gray-900">Kênh bán phòng</h2>
-          <p className="text-sm text-gray-500">
-            {totalCount} bookings · {from} → {to}
-          </p>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <DateRangePicker initialFrom={from} initialTo={to} />
+        <a
+          href={`/api/reports/channels?from=${from}&to=${to}`}
+          className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+        >
+          Xuất CSV
+        </a>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-200">
+          <p className="text-xs text-gray-500">Tổng booking</p>
+          <p className="mt-1 text-2xl font-bold text-gray-900">{totalBookings}</p>
         </div>
-        <div className="flex items-center gap-2">
-          <DateRangeControls initialFrom={from} initialTo={to} initialCompare={false} showCompare={false} />
-          <a
-            href={`/api/reports/channels/export?from=${from}&to=${to}`}
-            download={`channels-${from}-${to}.csv`}
-            className="rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50"
-          >
-            ↓ CSV
-          </a>
+        <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-200">
+          <p className="text-xs text-gray-500">Tổng doanh thu</p>
+          <p className="mt-1 text-lg font-bold text-gray-900">{fmtVND(totalRevenue)}</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-        {/* Pie chart */}
-        <div className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-gray-200">
-          <ChannelChart rows={rows} />
+      {data.length === 0 ? (
+        <div className="rounded-xl bg-white p-10 text-center text-sm text-gray-400 shadow-sm ring-1 ring-gray-200">
+          Không có dữ liệu trong khoảng thời gian này
         </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <ChannelChart data={data} />
 
-        {/* Table */}
-        <div className="rounded-xl bg-white shadow-sm ring-1 ring-gray-200 overflow-hidden self-start">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-xs text-gray-500 uppercase">
-              <tr>
-                <th className="px-4 py-3 text-left">Kênh</th>
-                <th className="px-4 py-3 text-right">Bookings</th>
-                <th className="px-4 py-3 text-right">%</th>
-                <th className="px-4 py-3 text-right">Doanh thu</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {rows.sort((a, b) => b.count - a.count).map((row) => (
-                <tr key={row.channel} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 font-medium text-gray-900">
-                    {CHANNEL_LABEL[row.channel] ?? row.channel}
-                  </td>
-                  <td className="px-4 py-2 text-right text-gray-700">{row.count}</td>
-                  <td className="px-4 py-2 text-right text-gray-500">
-                    {totalCount > 0 ? Math.round((row.count / totalCount) * 100) : 0}%
-                  </td>
-                  <td className="px-4 py-2 text-right text-gray-700">
-                    {row.revenue.toLocaleString("vi-VN")} đ
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-            <tfoot className="bg-gray-50 font-semibold">
-              <tr>
-                <td className="px-4 py-2">Tổng</td>
-                <td className="px-4 py-2 text-right">{totalCount}</td>
-                <td className="px-4 py-2 text-right">100%</td>
-                <td className="px-4 py-2 text-right">{totalRevenue.toLocaleString("vi-VN")} đ</td>
-              </tr>
-            </tfoot>
-          </table>
+          <div className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-200">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 text-sm">
+                <thead className="bg-gray-50">
+                  <tr>
+                    {["Kênh", "Booking", "%", "Doanh thu"].map((h) => (
+                      <th
+                        key={h}
+                        className={`px-4 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 ${h === "Kênh" ? "text-left" : "text-right"}`}
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 bg-white">
+                  {data.map((d) => (
+                    <tr key={d.channel} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-4 py-2.5 text-gray-700">
+                        {CHANNEL_LABEL[d.channel] ?? d.channel}
+                      </td>
+                      <td className="px-4 py-2.5 text-right text-gray-700">{d.count}</td>
+                      <td className="px-4 py-2.5 text-right text-gray-500">
+                        {totalBookings > 0
+                          ? Math.round((d.count / totalBookings) * 100)
+                          : 0}
+                        %
+                      </td>
+                      <td className="px-4 py-2.5 text-right text-gray-700">
+                        {fmtVND(d.revenue)}
+                      </td>
+                    </tr>
+                  ))}
+                  <tr className="bg-gray-50 font-semibold">
+                    <td className="px-4 py-2.5 text-gray-900">Tổng</td>
+                    <td className="px-4 py-2.5 text-right text-gray-900">{totalBookings}</td>
+                    <td className="px-4 py-2.5 text-right text-gray-900">100%</td>
+                    <td className="px-4 py-2.5 text-right text-gray-900">{fmtVND(totalRevenue)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

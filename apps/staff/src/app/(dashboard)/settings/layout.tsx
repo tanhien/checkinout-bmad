@@ -11,6 +11,7 @@ const TABS = [
   { href: "/settings/taxes",       label: "Thuế" },
   { href: "/settings/promo-codes", label: "Khuyến mãi" },
   { href: "/settings/staff",       label: "Nhân viên" },
+  { href: "/settings/content",     label: "Nội dung portal" },
 ]
 
 export default async function SettingsLayout({ children }: { children: React.ReactNode }) {
@@ -26,7 +27,7 @@ export default async function SettingsLayout({ children }: { children: React.Rea
           {TABS.map((tab) => (
             <Link
               key={tab.href}
-              href={tab.href as "/settings/property" | "/settings/room-types" | "/settings/rooms" | "/settings/rate-plans" | "/settings/services" | "/settings/taxes" | "/settings/promo-codes" | "/settings/staff"}
+              href={tab.href as "/settings/property" | "/settings/room-types" | "/settings/rooms" | "/settings/rate-plans" | "/settings/services" | "/settings/taxes" | "/settings/promo-codes" | "/settings/staff" | "/settings/content"}
               className="pb-3 px-3 text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors whitespace-nowrap"
             >
               {tab.label}

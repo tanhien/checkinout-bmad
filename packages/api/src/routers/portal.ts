@@ -85,6 +85,19 @@ export const portalRouter = router({
     return property
   }),
 
+  // ── Public: portal content overrides (for i18n merge) ────────────────────
+  getContent: publicProcedure.query(async ({ ctx }) => {
+    const propertyId = getPropertyId()
+    const p = await ctx.db.property.findUnique({
+      where: { id: propertyId },
+      select: { contentVi: true, contentEn: true },
+    })
+    return {
+      contentVi: (p?.contentVi ?? {}) as Record<string, unknown>,
+      contentEn: (p?.contentEn ?? {}) as Record<string, unknown>,
+    }
+  }),
+
   // ── Public: room type listing with availability + pricing ─────────────────
   getRoomTypes: publicProcedure
     .input(

@@ -152,6 +152,47 @@ export const propertyRouter = router({
       return property
     }),
 
+  // ─── Portal content management ──────────────────────────────────────────────
+
+  getContent: adminProcedure.query(async ({ ctx }) => {
+    if (!ctx.propertyId) throw new TRPCError({ code: "BAD_REQUEST", message: "No property" })
+    const p = await ctx.db.property.findUnique({
+      where: { id: ctx.propertyId },
+      select: { contentVi: true, contentEn: true },
+    })
+    if (!p) throw new TRPCError({ code: "NOT_FOUND", message: "Property not found" })
+    return {
+      contentVi: (p.contentVi ?? {}) as Record<string, unknown>,
+      contentEn: (p.contentEn ?? {}) as Record<string, unknown>,
+    }
+  }),
+
+  updateContent: adminProcedure
+    .input(
+      z.object({
+        locale: z.enum(["vi", "en"]),
+        content: z.record(z.unknown()),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.propertyId) throw new TRPCError({ code: "BAD_REQUEST", message: "No property" })
+      const field = input.locale === "vi" ? "contentVi" : "contentEn"
+      await ctx.db.property.update({
+        where: { id: ctx.propertyId },
+        data: { [field]: JSON.parse(JSON.stringify(input.content)) },
+      })
+      await ctx.db.auditLog.create({
+        data: {
+          staffId: ctx.auth.staffId,
+          entityType: "Property",
+          entityId: ctx.propertyId,
+          action: "UPDATE",
+          changes: { locale: input.locale, content: "updated" },
+        },
+      })
+      return { success: true }
+    }),
+
   // Preview email template with sample data (E6-S1)
   previewEmailTemplate: adminProcedure
     .input(z.object({ template: z.string() }))

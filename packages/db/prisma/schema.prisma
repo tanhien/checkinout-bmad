@@ -36,6 +36,8 @@ model Property {
   emailTemplate   String?
   taxCode         String?
   bankAccount     String?
+  contentVi       Json?
+  contentEn       Json?
   kioskApiKey     String       @unique @default(cuid())
   roomTypes       RoomType[]
   rooms           Room[]

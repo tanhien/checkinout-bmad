@@ -17,7 +17,7 @@ const roomStatusEnum = z.enum([
 const ALLOWED_TRANSITIONS: Record<RoomStatus, RoomStatus[]> = {
   DIRTY:       ["CLEANING", "CLEAN", "MAINTENANCE"],
   CLEANING:    ["CLEAN", "INSPECTED", "DIRTY"],
-  CLEAN:       ["DIRTY", "MAINTENANCE"],
+  CLEAN:       ["DIRTY", "MAINTENANCE", "INSPECTED"],
   INSPECTED:   ["DIRTY", "CLEAN", "MAINTENANCE"],
   MAINTENANCE: ["DIRTY", "CLEAN"],
   OCCUPIED:    ["DIRTY", "MAINTENANCE"],
